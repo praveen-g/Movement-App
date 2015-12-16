@@ -31,7 +31,7 @@
       </ion-header-bar>
       <ion-content  ng-controller="GeoCtrl" >
           <ul class="list">
-            <li class="item" ng-repeat="point in points">
+            <li class="item item-text-wrap" ng-repeat="point in points | orderBy:'-time'">
               ( {{ point.lat }} : {{ point.long }} at {{point.time}})
             </li>
           </ul>

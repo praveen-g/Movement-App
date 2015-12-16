@@ -36,6 +36,9 @@
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="IonicKeyboard" />
     </feature>
+    <gap:config-file overwrite="true" parent="NSLocationAlwaysUsageDescription" platform="ios">
+        <string>Allow Movement to track your location?</string>
+    </gap:config-file>
     <name>Movement</name>
     <description>
         An Ionic Framework and Cordova project.
