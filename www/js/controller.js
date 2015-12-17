@@ -1,28 +1,37 @@
 var app=angular.module('location');
-app.controller('GeoCtrl', function($scope, $cordovaGeolocation) {
+app.controller('GeoCtrl', function($scope, $cordovaGeolocation){ 
 
   $scope.points = [];
 
+  //function to convert timestamp to hours
+  var updateTime = function(timestamp){
+    var d = new Date(timestamp);
+      d=d.toTimeString();
+      return d;
+  };
+
+  //store values in array
+  var storePositionValues = function(lat,lng,time){
+    $scope.points.push({
+      "lat": lat,
+      "long": lng, 
+      "time": time
+    });
+  };
+
+  //get current GeoLocation
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
 
   $cordovaGeolocation
     .getCurrentPosition(posOptions)
     .then(function (position) {
-      
-      var d = new Date(position.timestamp);
-      d=d.toTimeString();
-      
       // add the initial lat / long
-      $scope.points.push({
-        "lat":position.coords.latitude, 
-        "long":position.coords.longitude, 
-        "time":d
-      });
-
+      storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp));
     }, function(err) {
       // error
     });
   
+  //update GeoLocation on change in value
   var watchOptions = {
     timeout : 1000,
     enableHighAccuracy: false // may cause errors if true
@@ -38,45 +47,29 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation) {
     function(position) {
       
       console.log("updating the position")
-
-      var d = new Date(position.timestamp);
-      d=d.toTimeString();
-
-      var point = {
-        "lat":position.coords.latitude, 
-        "long":position.coords.longitude, 
-        "time":d
-      };
-      $scope.points.push(point);    
+      storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp));
   });
+
 
   //Background Geolocation
 
   //function onDeviceReady() {
-    console.log("background stuff")
+    
     // Get a reference to the plugin.
     var bgGeo = window.BackgroundGeolocation;
 
     //Callback executed every time a geolocation is recorded in the background.
     var callbackFn = function(location, taskId) {
-
-        //getting current time
-        var d = new Date(location.timestamp);
-        d=d.toTimeString();
-
         var coords = location.coords;
         /*
         $scope.latitude    = coords.latitude;
         $scope.longitude    = coords.longitude;
         console.log($scope.latitude)
-        //adding background geolocation to points array
         */
-        var point = {
-        "lat":coords.latitude,
-        "long":coords.longitude, 
-        "time":d
-      };
-      $scope.points.push(point); 
+        //adding background geolocation to points array
+        
+        storePositionValues(coords.latitude,coords.longitude,updateTime(location.timestamp));
+        
         // Simulate doing some extra work with a bogus setTimeout.  This could perhaps be an Ajax request to your server.
         // The point here is that you must execute bgGeo.finish after all asynchronous operations within the callback are complete.
         setTimeout(function() {
@@ -88,9 +81,8 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation) {
         console.log('BackgroundGeoLocation error');
     }
 
-    // BackgroundGeoLocation is highly configurable.
+    // configure BackgroundGeoLocation.
     bgGeo.configure(callbackFn, failureFn, {
-
         // Geolocation config
         desiredAccuracy: 0, 
         stationaryRadius: 0,
@@ -114,5 +106,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation) {
         
     });
  bgGeo.start(); // start background geolocation services
- // }
 });
+
+
