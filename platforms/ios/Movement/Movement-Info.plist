@@ -178,5 +178,11 @@
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>TSLocationManager requires background location tracking</string>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>location</string>
+    </array>
   </dict>
 </plist>

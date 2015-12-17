@@ -48,6 +48,14 @@
 		8100E48865E8431A915B7E55 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F748BAA66F04A1C8CA12F2B /* CDVStatusBar.m */; };
 		BC7FCA17EA6B4E38AC959B5A /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 75890D69D9764C6FA0BC7965 /* IonicKeyboard.m */; };
 		91A9EF2A2B23498FA39CBBC2 /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB5882EAF6544119E4D09A5 /* UIWebViewExtension.m */; };
+		BF4AACF4D1814A48B52193B5 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7F07A15D0F4785BA22953C /* CDVNotification.m */; };
+		BC599BD7C86C456DA52CB150 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0AC307F0C9D4DFBA41CE25D /* CDVNotification.bundle */; };
+		89C106E66E9C48A7BEB185A6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31B3616149A34BAC9C56DCCA /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8DA51CF3194746BDA197AC11 /* CDVBackgroundGeolocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98831E0F9DBC4B1582BB263A /* CDVBackgroundGeolocation.m */; };
+		B104D7F365584F3E8F5CAE35 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DAA3555C4CF4F7E8483ED3A /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		5AA160DA902A44A9B06DD9A6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C367A3A56D0B4589BA8B7457 /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		BF9CF999B15C42419CD8C87A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4042C4A476E541BAAAA10633 /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9AB9F4A55CE24281AE101DAA /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3840BB5ABA944A399C48FFF4 /* TSLocationManager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +138,16 @@
 		8EB5882EAF6544119E4D09A5 /* UIWebViewExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIWebViewExtension.m"; path = "ionic-plugin-keyboard/UIWebViewExtension.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		AF714E8E79AE43258F3E4EC9 /* IonicKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IonicKeyboard.h"; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		9E9FDB171D7041D0AE131FEA /* UIWebViewExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIWebViewExtension.h"; path = "ionic-plugin-keyboard/UIWebViewExtension.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		AA7F07A15D0F4785BA22953C /* CDVNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVNotification.m"; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		1F8CE857078D4C678C34742C /* CDVNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVNotification.h"; path = "cordova-plugin-dialogs/CDVNotification.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		D0AC307F0C9D4DFBA41CE25D /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "CDVNotification.bundle"; path = "CDVNotification.bundle"; sourceTree = "<group>"; };
+		31B3616149A34BAC9C56DCCA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		98831E0F9DBC4B1582BB263A /* CDVBackgroundGeolocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVBackgroundGeolocation.m"; path = "com.transistorsoft.cordova.background-geolocation/CDVBackgroundGeolocation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		51A5638D2E0545478F68B0C0 /* CDVBackgroundGeolocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVBackgroundGeolocation.h"; path = "com.transistorsoft.cordova.background-geolocation/CDVBackgroundGeolocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		7DAA3555C4CF4F7E8483ED3A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		C367A3A56D0B4589BA8B7457 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		4042C4A476E541BAAAA10633 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
+		3840BB5ABA944A399C48FFF4 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "TSLocationManager.framework"; path = "Movement/Plugins/com.transistorsoft.cordova.background-geolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +160,11 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				D098C93617844157BC905CC2 /* CoreLocation.framework in Frameworks */,
+				89C106E66E9C48A7BEB185A6 /* AudioToolbox.framework in Frameworks */,
+				B104D7F365584F3E8F5CAE35 /* SystemConfiguration.framework in Frameworks */,
+				5AA160DA902A44A9B06DD9A6 /* AVFoundation.framework in Frameworks */,
+				BF9CF999B15C42419CD8C87A /* libsqlite3.dylib in Frameworks */,
+				9AB9F4A55CE24281AE101DAA /* TSLocationManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +226,7 @@
 				308D052D1370CCF300D202BF /* icons */,
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* Movement-Info.plist */,
+				D0AC307F0C9D4DFBA41CE25D /* CDVNotification.bundle */,
 			);
 			name = Resources;
 			path = "Movement/Resources";
@@ -215,6 +239,11 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				B0D2C06E91644CECACCFE998 /* CoreLocation.framework */,
+				31B3616149A34BAC9C56DCCA /* AudioToolbox.framework */,
+				7DAA3555C4CF4F7E8483ED3A /* SystemConfiguration.framework */,
+				C367A3A56D0B4589BA8B7457 /* AVFoundation.framework */,
+				4042C4A476E541BAAAA10633 /* libsqlite3.dylib */,
+				3840BB5ABA944A399C48FFF4 /* TSLocationManager.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -246,6 +275,10 @@
 				8EB5882EAF6544119E4D09A5 /* UIWebViewExtension.m */,
 				AF714E8E79AE43258F3E4EC9 /* IonicKeyboard.h */,
 				9E9FDB171D7041D0AE131FEA /* UIWebViewExtension.h */,
+				AA7F07A15D0F4785BA22953C /* CDVNotification.m */,
+				1F8CE857078D4C678C34742C /* CDVNotification.h */,
+				98831E0F9DBC4B1582BB263A /* CDVBackgroundGeolocation.m */,
+				51A5638D2E0545478F68B0C0 /* CDVBackgroundGeolocation.h */,
 			);
 			name = Plugins;
 			path = "Movement/Plugins";
@@ -399,6 +432,7 @@
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+				BC599BD7C86C456DA52CB150 /* CDVNotification.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +472,8 @@
 				8100E48865E8431A915B7E55 /* CDVStatusBar.m in Sources */,
 				BC7FCA17EA6B4E38AC959B5A /* IonicKeyboard.m in Sources */,
 				91A9EF2A2B23498FA39CBBC2 /* UIWebViewExtension.m in Sources */,
+				BF4AACF4D1814A48B52193B5 /* CDVNotification.m in Sources */,
+				8DA51CF3194746BDA197AC11 /* CDVBackgroundGeolocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +516,10 @@
 				);
 				PRODUCT_NAME = "Movement";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Movement/Plugins/com.transistorsoft.cordova.background-geolocation\"",
+				);
 			};
 			name = Debug;
 		};
@@ -509,6 +549,10 @@
 				);
 				PRODUCT_NAME = "Movement";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Movement/Plugins/com.transistorsoft.cordova.background-geolocation\"",
+				);
 			};
 			name = Release;
 		};

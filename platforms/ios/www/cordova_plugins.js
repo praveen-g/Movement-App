@@ -80,6 +80,22 @@ module.exports = [
             "cordova.plugins.Keyboard"
         ],
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+        "id": "cordova-plugin-dialogs.notification",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/com.transistorsoft.cordova.background-geolocation/www/BackgroundGeolocation.js",
+        "id": "com.transistorsoft.cordova.background-geolocation.BackgroundGeolocation",
+        "pluginId": "com.transistorsoft.cordova.background-geolocation",
+        "clobbers": [
+            "window.BackgroundGeolocation"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -91,7 +107,9 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "3.0.0",
     "cordova-plugin-statusbar": "2.0.0",
     "cordova-plugin-whitelist": "1.2.0",
-    "ionic-plugin-keyboard": "1.0.8"
+    "ionic-plugin-keyboard": "1.0.8",
+    "cordova-plugin-dialogs": "1.2.0",
+    "com.transistorsoft.cordova.background-geolocation": "1.2.0"
 }
 // BOTTOM OF METADATA
 });

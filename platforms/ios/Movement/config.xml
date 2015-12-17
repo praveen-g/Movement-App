@@ -36,6 +36,12 @@
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="IonicKeyboard" />
     </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
+    </feature>
+    <feature name="BackgroundGeolocation">
+        <param name="ios-package" value="CDVBackgroundGeolocation" />
+    </feature>
     <gap:config-file overwrite="true" parent="NSLocationAlwaysUsageDescription" platform="ios">
         <string>Allow Movement to track your location?</string>
     </gap:config-file>
