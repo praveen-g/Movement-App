@@ -21,4 +21,4 @@ angular.module('location', ['ionic', 'ngCordova'])
       StatusBar.styleDefault();
     }
   });
-})
+});

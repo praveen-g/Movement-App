@@ -55,6 +55,14 @@
         "is_top_level": true,
         "variables": {}
     },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
     "com.transistorsoft.cordova.background-geolocation": {
         "source": {
             "type": "git",
@@ -64,12 +72,12 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-dialogs": {
+    "cordova-plugin-mauron85-background-geolocation": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-dialogs"
+            "id": "cordova-plugin-mauron85-background-geolocation"
         },
-        "is_top_level": false,
+        "is_top_level": true,
         "variables": {}
     }
 }
