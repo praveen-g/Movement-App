@@ -12,6 +12,7 @@
 
 @interface ViewController () <CLLocationManagerDelegate>
 
+
 @property locationPointsViewController *controller;
 
 @end
@@ -23,14 +24,26 @@
     
     //Initializing object for passing values
     self.controller = [[locationPointsViewController alloc]initWithStyle:UITableViewStylePlain];
-    [self.controller initializeArrays];
     
+    //Obtaining values from User Defaults if any
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.controller.lat = [[defaults objectForKey:@"latitude"]mutableCopy];
+    self.controller.lng = [[defaults objectForKey:@"longitude"]mutableCopy];
+    self.controller.time = [[defaults objectForKey:@"time"]mutableCopy];
+    
+    //initialize arrays only if UserDefaults are empty
+    if( self.controller.lat== nil || self.controller.lng==nil || self.controller.time==nil){
+        [self.controller initializeArrays];}
+    
+    //Initializing Location Object
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate=self;
     self.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
-    [self.locationManager requestWhenInUseAuthorization];
-    //self.locationManager.allowsBackgroundLocationUpdates = YES;
+    self.locationManager.activityType = CLActivityTypeFitness;
+    self.locationManager.allowsBackgroundLocationUpdates = YES;
+    //[self.locationManager requestAlwaysAuthorization];
+    
     [self.locationManager startUpdatingLocation];
     
 }
@@ -39,10 +52,30 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)disableLocationServices:(id)sender {
+    if ([sender isOn]){
+        [self.locationManager startUpdatingLocation];
+    }
+    else{
+        [self.locationManager stopUpdatingLocation];
+    }
+}
 
 - (IBAction)showLocation:(id)sender {;
+    //Store location points
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:self.controller.lat forKey:@"latitude"];
+    [defaults setObject:self.controller.lng forKey:@"longitude"];
+    [defaults setObject:self.controller.time forKey:@"time"];
+    
+    [defaults synchronize];
+    
+    NSLog(@"Data saved");
+    
+    //Call TableViewController
     [self.navigationController pushViewController:self.controller animated:YES];
-        //[self.view.window.rootViewController presentViewController:self.controller animated:YES completion:nil];
+    
 }
 
 #pragma mark CLLocationManagerDelegate Methods
@@ -57,7 +90,10 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     //Get the last object stored in array
     CLLocation *currentLocation = [locations lastObject];
-    
+    if( UIApplication.sharedApplication.applicationState == UIApplicationStateInactive){
+        NSLog(@"App is backgrounded. New location is %@", [locations lastObject]);
+        currentLocation = [locations lastObject];
+    }
     //Store location values in arrays
     [self.controller.lat addObject:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]];
     [self.controller.lng addObject:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude]];
@@ -67,7 +103,8 @@
     timeFormatter.dateFormat = @"hh:mm:ss MM-dd-yyyy";
     NSString *dateString = [timeFormatter stringFromDate: currentLocation.timestamp];
     [self.controller.time addObject:[NSString stringWithFormat:@"%@", dateString]];
-
+    
+    
 }
 
 @end

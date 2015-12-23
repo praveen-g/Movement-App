@@ -1,6 +1,7 @@
 var app=angular.module('location');
 
-app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform){ 
+app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform)
+{ 
 
   $scope.points = [];
 
@@ -48,8 +49,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     function(position) {
       storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp));
     });
-});
-  /*
 
   //storing configurations for background locations
   var options= {
@@ -73,22 +72,38 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   };
   
   document.addEventListener("deviceready", function (){
-    //test if Background geolocation working
-    var callbackFn = function(location) {
-            console.log('[BackgroundGeoLocation] Update callback:  ' + location.latitude + ',' + location.longitude);
-    };
 
-    var failureFn = function(error) {
-            console.log('[BackgroundGeoLocation] Error: '+error);
-    };
+    cordova.plugins.backgroundMode.enable();
 
-    $cordovaBackgroundGeolocation.configure(callbackFn, failureFn, options);
+    cordova.plugins.backgroundMode.onactivate = function() {
 
-    //turn on Background Geolocation
-    $cordovaBackgroundGeolocation.start();
+      //test if Background geolocation working
+      var callbackFn = function(location) {
+        console.log('[BackgroundGeoLocation] Update callback:  ' + location.latitude + ',' + location.longitude);
+        storePositionValues(location.coords.latitude,location.coords.longitude,updateTime(location.timestamp));
+      };
+
+      var failureFn = function(error) {
+        console.log('[BackgroundGeoLocation] Error: '+error);
+      };
+
+      $cordovaBackgroundGeolocation.configure(callbackFn, failureFn, options);
+
+      //turn on Background Geolocation
+      $cordovaBackgroundGeolocation.start();
+
+    }
+    /*
+        window.setTimeout(function() {
+          // disable application if we're still in background after 1 minute
+          cordova.plugins.backgroundMode.disable();
+        }, 60 *1000);
+      };
+    */
+   
   });
 });
-*/
+
 
 
 

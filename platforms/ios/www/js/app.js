@@ -22,6 +22,7 @@ angular.module('location', ['ionic', 'ngCordova'])
     }
   });
 });
+
 /*  
   //setting up push notifications
 

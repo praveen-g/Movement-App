@@ -55,6 +55,11 @@
 		474284C58DC74DFD861152DC /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B93DEC19534CBF89A89D78 /* CDVStatusBar.m */; };
 		E8865FE61E4D4CBAABEDD414 /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B01F865B09C47BDAB363A65 /* IonicKeyboard.m */; };
 		686C653C71D64891AFC013D0 /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F4DC7F76F42768CC1E80A /* UIWebViewExtension.m */; };
+		75357FAC17F84DBEACE13477 /* NativeAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C5C61B9BD44599F80CABA /* NativeAudio.m */; };
+		9ECA6EA33F7447D2981BAB23 /* NativeAudioAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A6D0D47CC243238DEF96A6 /* NativeAudioAsset.m */; };
+		26FA242AB44C405C940D79D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366E4D1312634F2EA505FBC2 /* Foundation.framework */; };
+		F7BA5DA2CBB54684B31A8A48 /* APPBackgroundMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA092CA8ADB458AB5EBD0F6 /* APPBackgroundMode.m */; };
+		558BD9811229474FA7EA723D /* appbeep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4E767200389B4A2BA9B619B6 /* appbeep.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +153,14 @@
 		4B5F4DC7F76F42768CC1E80A /* UIWebViewExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIWebViewExtension.m"; path = "ionic-plugin-keyboard/UIWebViewExtension.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		62483E935F8641FEAAEC780F /* IonicKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IonicKeyboard.h"; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		9598A9FF160748118FB83447 /* UIWebViewExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIWebViewExtension.h"; path = "ionic-plugin-keyboard/UIWebViewExtension.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		821C5C61B9BD44599F80CABA /* NativeAudio.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NativeAudio.m"; path = "cordova-plugin-nativeaudio/NativeAudio.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		50A6D0D47CC243238DEF96A6 /* NativeAudioAsset.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NativeAudioAsset.m"; path = "cordova-plugin-nativeaudio/NativeAudioAsset.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		8EDAB28EDD5D4B12B4E6767B /* NativeAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NativeAudio.h"; path = "cordova-plugin-nativeaudio/NativeAudio.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		4EAD07CF2EFB4CA28708E133 /* NativeAudioAsset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NativeAudioAsset.h"; path = "cordova-plugin-nativeaudio/NativeAudioAsset.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		366E4D1312634F2EA505FBC2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Foundation.framework"; path = "System/Library/Frameworks/Foundation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		4AA092CA8ADB458AB5EBD0F6 /* APPBackgroundMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "APPBackgroundMode.m"; path = "de.appplant.cordova.plugin.background-mode/APPBackgroundMode.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		F0462F55D0A247F4890F77C1 /* APPBackgroundMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "APPBackgroundMode.h"; path = "de.appplant.cordova.plugin.background-mode/APPBackgroundMode.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		4E767200389B4A2BA9B619B6 /* appbeep.wav */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "appbeep.wav"; path = "appbeep.wav"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +175,7 @@
 				CADF554EB38248E887609AE4 /* AudioToolbox.framework in Frameworks */,
 				24CF65A9FEAE4B98AF541576 /* CoreLocation.framework in Frameworks */,
 				D5795DEC37A74866ACF10A36 /* AVFoundation.framework in Frameworks */,
+				26FA242AB44C405C940D79D3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +238,7 @@
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* Movement-Info.plist */,
 				9A4D0221540A4F0CAA415C26 /* CDVNotification.bundle */,
+				4E767200389B4A2BA9B619B6 /* appbeep.wav */,
 			);
 			name = Resources;
 			path = "Movement/Resources";
@@ -238,6 +253,7 @@
 				3F2B051969A544DF8877C9FB /* AudioToolbox.framework */,
 				2CF96F063C8441D1B59EA27C /* CoreLocation.framework */,
 				F1D01FBE6CD146DDA57650BF /* AVFoundation.framework */,
+				366E4D1312634F2EA505FBC2 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -277,6 +293,12 @@
 				4B5F4DC7F76F42768CC1E80A /* UIWebViewExtension.m */,
 				62483E935F8641FEAAEC780F /* IonicKeyboard.h */,
 				9598A9FF160748118FB83447 /* UIWebViewExtension.h */,
+				821C5C61B9BD44599F80CABA /* NativeAudio.m */,
+				50A6D0D47CC243238DEF96A6 /* NativeAudioAsset.m */,
+				8EDAB28EDD5D4B12B4E6767B /* NativeAudio.h */,
+				4EAD07CF2EFB4CA28708E133 /* NativeAudioAsset.h */,
+				4AA092CA8ADB458AB5EBD0F6 /* APPBackgroundMode.m */,
+				F0462F55D0A247F4890F77C1 /* APPBackgroundMode.h */,
 			);
 			name = Plugins;
 			path = "Movement/Plugins";
@@ -431,6 +453,7 @@
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 				D87CF971F9F446BAA10D47DA /* CDVNotification.bundle in Resources */,
+				558BD9811229474FA7EA723D /* appbeep.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +497,9 @@
 				474284C58DC74DFD861152DC /* CDVStatusBar.m in Sources */,
 				E8865FE61E4D4CBAABEDD414 /* IonicKeyboard.m in Sources */,
 				686C653C71D64891AFC013D0 /* UIWebViewExtension.m in Sources */,
+				75357FAC17F84DBEACE13477 /* NativeAudio.m in Sources */,
+				9ECA6EA33F7447D2981BAB23 /* NativeAudioAsset.m in Sources */,
+				F7BA5DA2CBB54684B31A8A48 /* APPBackgroundMode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
