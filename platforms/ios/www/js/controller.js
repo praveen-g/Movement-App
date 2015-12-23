@@ -18,7 +18,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       "long": lng, 
       "time": time
     });
-    console.log(lat);
   };
 
   //get current GeoLocation
@@ -35,7 +34,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   
   //update GeoLocation on change in value
   var watchOptions = {
-    timeout : 1000,
+    timeout : 5000,
     enableHighAccuracy: false // may cause errors if true
   };
 
@@ -47,9 +46,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       // error
     },
     function(position) {
-      console.log("updating the position")
       storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp));
     });
+});
+  /*
 
   //storing configurations for background locations
   var options= {
@@ -72,8 +72,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     startOnBoot: true,  
   };
   
-  
-  $ionicPlatform.ready(function(){
+  document.addEventListener("deviceready", function (){
     //test if Background geolocation working
     var callbackFn = function(location) {
             console.log('[BackgroundGeoLocation] Update callback:  ' + location.latitude + ',' + location.longitude);
@@ -89,3 +88,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     $cordovaBackgroundGeolocation.start();
   });
 });
+*/
+
+
+

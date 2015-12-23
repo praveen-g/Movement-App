@@ -178,13 +178,13 @@
         <string>{768, 1024}</string>
       </dict>
     </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string/>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>This app requires background location tracking</string>
     <key>UIBackgroundModes</key>
     <array>
       <string>location</string>
     </array>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string/>
   </dict>
 </plist>

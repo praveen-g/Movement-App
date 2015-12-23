@@ -7,7 +7,7 @@
         "files": {}
     },
     "installed_plugins": {
-        "com.transistorsoft.cordova.background-geolocation": {
+        "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         },
         "cordova-plugin-console": {
@@ -22,6 +22,9 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         },
+        "cordova-plugin-mauron85-background-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.movement130724"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         },
@@ -32,9 +35,6 @@
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.movement130724"
-        },
-        "cordova-plugin-mauron85-background-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         }
     },

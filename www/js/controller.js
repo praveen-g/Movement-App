@@ -34,7 +34,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   
   //update GeoLocation on change in value
   var watchOptions = {
-    timeout : 1000,
+    timeout : 5000,
     enableHighAccuracy: false // may cause errors if true
   };
 
@@ -48,6 +48,8 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     function(position) {
       storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp));
     });
+});
+  /*
 
   //storing configurations for background locations
   var options= {
@@ -86,3 +88,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     $cordovaBackgroundGeolocation.start();
   });
 });
+*/
+
+
+
