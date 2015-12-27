@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     }
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +58,10 @@
     
     cell.textLabel.text = [NSString stringWithFormat:@" Latitude %@  Longtitude %@", self.lat[indexPath.row], self.lng[indexPath.row]];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Timestamp %@", self.time[indexPath.row]];
-        
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
     return cell;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{

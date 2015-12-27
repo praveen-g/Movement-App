@@ -11,6 +11,7 @@
 @interface ViewController : UIViewController
 
 @property(nonatomic) CLLocationManager *locationManager;
-
+-(void)saveLocations:(CLLocation*)locations;
+-(void) sendBackgroundLocationToServer:(CLLocation *)location;
 @end
 

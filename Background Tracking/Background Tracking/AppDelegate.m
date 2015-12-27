@@ -16,24 +16,54 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    CLLocationManager *backgroundLocationManager ;
-    
+    [self locationSpecifications];
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
-        backgroundLocationManager = [[CLLocationManager alloc]init];
-        backgroundLocationManager.delegate = self;
-        backgroundLocationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-        backgroundLocationManager.activityType = CLActivityTypeOtherNavigation;
-        [backgroundLocationManager requestAlwaysAuthorization];
-        if ( [CLLocationManager locationServicesEnabled]){
-            [backgroundLocationManager startMonitoringSignificantLocationChanges];
-        } else {
-            NSLog(@"Location services not enabled, please enable this in your Settings");
+        
+        UIAlertView * alert;
+        
+        //We have to make sure that the Background app Refresh is enabled for the Location updates to work in the background.
+        if([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusDenied)
+        {
+            
+            // The user explicitly disabled the background services for this app or for the whole system.
+            
+            alert = [[UIAlertView alloc]initWithTitle:@""
+                                              message:@"The app doesn't work without the Background app Refresh enabled. To turn it on, go to Settings > General > Background app Refresh"
+                                             delegate:nil
+                                    cancelButtonTitle:@"Ok"
+                                    otherButtonTitles:nil, nil];
+            [alert show];
+            
+        } else if([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusRestricted)
+        {
+            
+            // Background services are disabled and the user cannot turn them on.
+            // May occur when the device is restricted under parental control.
+            alert = [[UIAlertView alloc]initWithTitle:@""
+                                              message:@"The functions of this app are limited because the Background app Refresh is disable."
+                                             delegate:nil
+                                    cancelButtonTitle:@"Ok"
+                                    otherButtonTitles:nil, nil];
+            [alert show];
+            
+        } else
+        {
+            
+            [self.backgroundLocationManager startMonitoringSignificantLocationChanges];
         }
-    }    
+    }
     return YES;
 }
 
-
+-(void) locationSpecifications{
+    self.backgroundLocationManager = [[CLLocationManager alloc]init];
+    self.backgroundLocationManager = [[CLLocationManager alloc]init];
+    self.backgroundLocationManager.delegate = self;
+    self.backgroundLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.backgroundLocationManager.activityType = CLActivityTypeFitness;
+    [self.backgroundLocationManager requestWhenInUseAuthorization];
+    
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 
@@ -56,6 +86,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
+    }
 
 @end

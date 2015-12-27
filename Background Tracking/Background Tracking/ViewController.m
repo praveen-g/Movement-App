@@ -11,7 +11,7 @@
 #import "locationPointsViewController.h"
 
 @interface ViewController () <CLLocationManagerDelegate>
-
+@property UIBackgroundTaskIdentifier bgTask;
 
 @property locationPointsViewController *controller;
 
@@ -39,10 +39,10 @@
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate=self;
     self.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.activityType = CLActivityTypeFitness;
     self.locationManager.allowsBackgroundLocationUpdates = YES;
-    //[self.locationManager requestAlwaysAuthorization];
+    [self.locationManager requestAlwaysAuthorization];
     
     [self.locationManager startUpdatingLocation];
     
@@ -90,21 +90,40 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     //Get the last object stored in array
     CLLocation *currentLocation = [locations lastObject];
-    if( UIApplication.sharedApplication.applicationState == UIApplicationStateInactive){
+    if( UIApplication.sharedApplication.applicationState == UIApplicationStateInactive || UIApplication.sharedApplication.applicationState == UIApplicationStateBackground){
+        
         NSLog(@"App is backgrounded. New location is %@", [locations lastObject]);
-        currentLocation = [locations lastObject];
     }
+    [self saveLocations:currentLocation];
+}
+
+-(void)saveLocations:(CLLocation*)locations{
     //Store location values in arrays
-    [self.controller.lat addObject:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]];
-    [self.controller.lng addObject:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude]];
+    [self.controller.lat insertObject:[NSString stringWithFormat:@"%f", locations.coordinate.latitude] atIndex:0];
+    [self.controller.lng insertObject:[NSString stringWithFormat:@"%f", locations.coordinate.longitude] atIndex:0];
     
     //Store formatted date
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
     timeFormatter.dateFormat = @"hh:mm:ss MM-dd-yyyy";
-    NSString *dateString = [timeFormatter stringFromDate: currentLocation.timestamp];
-    [self.controller.time addObject:[NSString stringWithFormat:@"%@", dateString]];
-    
+    NSString *dateString = [timeFormatter stringFromDate: locations.timestamp];
+    [self.controller.time insertObject:[NSString stringWithFormat:@"%@", dateString] atIndex:0];
     
 }
 
+-(void) sendBackgroundLocationToServer:(CLLocation *)location
+{
+    
+    self.bgTask = [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:
+              ^{
+                  [[UIApplication sharedApplication] endBackgroundTask:_bgTask];
+                   }];
+                  
+                  [self saveLocations:location];
+    
+                  if (_bgTask != UIBackgroundTaskInvalid)
+                  {
+                      [[UIApplication sharedApplication] endBackgroundTask:_bgTask];
+                       _bgTask = UIBackgroundTaskInvalid;
+                       }
+}
 @end
