@@ -37,7 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2588034B1C29D4290094C483 /* Background Tracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Background Tracking.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2588034B1C29D4290094C483 /* Movement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2588034F1C29D4290094C483 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		258803511C29D4290094C483 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		258803521C29D4290094C483 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -46,10 +46,10 @@
 		2588035A1C29D4290094C483 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2588035D1C29D4290094C483 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2588035F1C29D4290094C483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		258803641C29D4290094C483 /* Background TrackingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Background TrackingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		258803641C29D4290094C483 /* Movement.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Movement.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		258803681C29D42A0094C483 /* Background_TrackingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Background_TrackingTests.m; sourceTree = "<group>"; };
 		2588036A1C29D42A0094C483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2588036F1C29D42A0094C483 /* Background TrackingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Background TrackingUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2588036F1C29D42A0094C483 /* Movement.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Movement.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		258803731C29D42A0094C483 /* Background_TrackingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Background_TrackingUITests.m; sourceTree = "<group>"; };
 		258803751C29D42A0094C483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		258803811C29D8D10094C483 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -98,9 +98,9 @@
 		2588034C1C29D4290094C483 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2588034B1C29D4290094C483 /* Background Tracking.app */,
-				258803641C29D4290094C483 /* Background TrackingTests.xctest */,
-				2588036F1C29D42A0094C483 /* Background TrackingUITests.xctest */,
+				2588034B1C29D4290094C483 /* Movement.app */,
+				258803641C29D4290094C483 /* Movement.xctest */,
+				2588036F1C29D42A0094C483 /* Movement.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -152,9 +152,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2588034A1C29D4290094C483 /* Background Tracking */ = {
+		2588034A1C29D4290094C483 /* Movement */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 258803781C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Background Tracking" */;
+			buildConfigurationList = 258803781C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Movement" */;
 			buildPhases = (
 				258803471C29D4290094C483 /* Sources */,
 				258803481C29D4290094C483 /* Frameworks */,
@@ -164,14 +164,14 @@
 			);
 			dependencies = (
 			);
-			name = "Background Tracking";
+			name = Movement;
 			productName = "Background Tracking";
-			productReference = 2588034B1C29D4290094C483 /* Background Tracking.app */;
+			productReference = 2588034B1C29D4290094C483 /* Movement.app */;
 			productType = "com.apple.product-type.application";
 		};
-		258803631C29D4290094C483 /* Background TrackingTests */ = {
+		258803631C29D4290094C483 /* MovementTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2588037B1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Background TrackingTests" */;
+			buildConfigurationList = 2588037B1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "MovementTests" */;
 			buildPhases = (
 				258803601C29D4290094C483 /* Sources */,
 				258803611C29D4290094C483 /* Frameworks */,
@@ -182,14 +182,14 @@
 			dependencies = (
 				258803661C29D4290094C483 /* PBXTargetDependency */,
 			);
-			name = "Background TrackingTests";
+			name = MovementTests;
 			productName = "Background TrackingTests";
-			productReference = 258803641C29D4290094C483 /* Background TrackingTests.xctest */;
+			productReference = 258803641C29D4290094C483 /* Movement.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2588036E1C29D42A0094C483 /* Background TrackingUITests */ = {
+		2588036E1C29D42A0094C483 /* MovementUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2588037E1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Background TrackingUITests" */;
+			buildConfigurationList = 2588037E1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "MovementUITests" */;
 			buildPhases = (
 				2588036B1C29D42A0094C483 /* Sources */,
 				2588036C1C29D42A0094C483 /* Frameworks */,
@@ -200,9 +200,9 @@
 			dependencies = (
 				258803711C29D42A0094C483 /* PBXTargetDependency */,
 			);
-			name = "Background TrackingUITests";
+			name = MovementUITests;
 			productName = "Background TrackingUITests";
-			productReference = 2588036F1C29D42A0094C483 /* Background TrackingUITests.xctest */;
+			productReference = 2588036F1C29D42A0094C483 /* Movement.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -227,7 +227,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 258803461C29D4290094C483 /* Build configuration list for PBXProject "Background Tracking" */;
+			buildConfigurationList = 258803461C29D4290094C483 /* Build configuration list for PBXProject "Movement" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -240,9 +240,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2588034A1C29D4290094C483 /* Background Tracking */,
-				258803631C29D4290094C483 /* Background TrackingTests */,
-				2588036E1C29D42A0094C483 /* Background TrackingUITests */,
+				2588034A1C29D4290094C483 /* Movement */,
+				258803631C29D4290094C483 /* MovementTests */,
+				2588036E1C29D42A0094C483 /* MovementUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -307,12 +307,12 @@
 /* Begin PBXTargetDependency section */
 		258803661C29D4290094C483 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2588034A1C29D4290094C483 /* Background Tracking */;
+			target = 2588034A1C29D4290094C483 /* Movement */;
 			targetProxy = 258803651C29D4290094C483 /* PBXContainerItemProxy */;
 		};
 		258803711C29D42A0094C483 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2588034A1C29D4290094C483 /* Background Tracking */;
+			target = 2588034A1C29D4290094C483 /* Movement */;
 			targetProxy = 258803701C29D42A0094C483 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -424,7 +424,7 @@
 				INFOPLIST_FILE = "Background Tracking/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.cs2048.Background-Tracking";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Movement;
 			};
 			name = Debug;
 		};
@@ -435,7 +435,7 @@
 				INFOPLIST_FILE = "Background Tracking/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.cs2048.Background-Tracking";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Movement;
 			};
 			name = Release;
 		};
@@ -446,8 +446,8 @@
 				INFOPLIST_FILE = "Background TrackingTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.cs2048.Background-TrackingTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Background Tracking.app/Background Tracking";
+				PRODUCT_NAME = Movement;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Movement.app/Movement";
 			};
 			name = Debug;
 		};
@@ -458,8 +458,8 @@
 				INFOPLIST_FILE = "Background TrackingTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.cs2048.Background-TrackingTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Background Tracking.app/Background Tracking";
+				PRODUCT_NAME = Movement;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Movement.app/Movement";
 			};
 			name = Release;
 		};
@@ -469,7 +469,7 @@
 				INFOPLIST_FILE = "Background TrackingUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.cs2048.Background-TrackingUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Movement;
 				TEST_TARGET_NAME = "Background Tracking";
 				USES_XCTRUNNER = YES;
 			};
@@ -481,7 +481,7 @@
 				INFOPLIST_FILE = "Background TrackingUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.cs2048.Background-TrackingUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Movement;
 				TEST_TARGET_NAME = "Background Tracking";
 				USES_XCTRUNNER = YES;
 			};
@@ -490,7 +490,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		258803461C29D4290094C483 /* Build configuration list for PBXProject "Background Tracking" */ = {
+		258803461C29D4290094C483 /* Build configuration list for PBXProject "Movement" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				258803761C29D42A0094C483 /* Debug */,
@@ -499,7 +499,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		258803781C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Background Tracking" */ = {
+		258803781C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Movement" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				258803791C29D42A0094C483 /* Debug */,
@@ -508,7 +508,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2588037B1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Background TrackingTests" */ = {
+		2588037B1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "MovementTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2588037C1C29D42A0094C483 /* Debug */,
@@ -517,7 +517,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2588037E1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "Background TrackingUITests" */ = {
+		2588037E1C29D42A0094C483 /* Build configuration list for PBXNativeTarget "MovementUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2588037F1C29D42A0094C483 /* Debug */,

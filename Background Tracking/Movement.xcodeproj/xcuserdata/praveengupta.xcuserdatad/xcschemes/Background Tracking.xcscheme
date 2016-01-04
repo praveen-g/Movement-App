@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2588034A1C29D4290094C483"
-               BuildableName = "Background Tracking.app"
-               BlueprintName = "Background Tracking"
-               ReferencedContainer = "container:Background Tracking.xcodeproj">
+               BuildableName = "Movement.app"
+               BlueprintName = "Movement"
+               ReferencedContainer = "container:Movement.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "258803631C29D4290094C483"
-               BuildableName = "Background TrackingTests.xctest"
-               BlueprintName = "Background TrackingTests"
-               ReferencedContainer = "container:Background Tracking.xcodeproj">
+               BuildableName = "Movement.xctest"
+               BlueprintName = "MovementTests"
+               ReferencedContainer = "container:Movement.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2588036E1C29D42A0094C483"
-               BuildableName = "Background TrackingUITests.xctest"
-               BlueprintName = "Background TrackingUITests"
-               ReferencedContainer = "container:Background Tracking.xcodeproj">
+               BuildableName = "Movement.xctest"
+               BlueprintName = "MovementUITests"
+               ReferencedContainer = "container:Movement.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2588034A1C29D4290094C483"
-            BuildableName = "Background Tracking.app"
-            BlueprintName = "Background Tracking"
-            ReferencedContainer = "container:Background Tracking.xcodeproj">
+            BuildableName = "Movement.app"
+            BlueprintName = "Movement"
+            ReferencedContainer = "container:Movement.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2588034A1C29D4290094C483"
-            BuildableName = "Background Tracking.app"
-            BlueprintName = "Background Tracking"
-            ReferencedContainer = "container:Background Tracking.xcodeproj">
+            BuildableName = "Movement.app"
+            BlueprintName = "Movement"
+            ReferencedContainer = "container:Movement.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2588034A1C29D4290094C483"
-            BuildableName = "Background Tracking.app"
-            BlueprintName = "Background Tracking"
-            ReferencedContainer = "container:Background Tracking.xcodeproj">
+            BuildableName = "Movement.app"
+            BlueprintName = "Movement"
+            ReferencedContainer = "container:Movement.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

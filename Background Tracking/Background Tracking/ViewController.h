@@ -12,6 +12,6 @@
 
 @property(nonatomic) CLLocationManager *locationManager;
 -(void)saveLocations:(CLLocation*)locations;
--(void) sendBackgroundLocationToServer:(CLLocation *)location;
+-(void)convert:(NSString*)time To:(NSString*)longitude JSON:(NSString*)latitude;
 @end
 

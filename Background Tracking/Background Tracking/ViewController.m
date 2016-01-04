@@ -63,17 +63,7 @@
 
 - (IBAction)showLocation:(id)sender {;
     //Store location points
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    [defaults setObject:self.controller.lat forKey:@"latitude"];
-    [defaults setObject:self.controller.lng forKey:@"longitude"];
-    [defaults setObject:self.controller.time forKey:@"time"];
-    
-    [defaults synchronize];
-    
-    NSLog(@"Data saved");
-    
-    //Call TableViewController
+        //Call TableViewController
     [self.navigationController pushViewController:self.controller animated:YES];
     
 }
@@ -99,31 +89,39 @@
 
 -(void)saveLocations:(CLLocation*)locations{
     //Store location values in arrays
-    [self.controller.lat insertObject:[NSString stringWithFormat:@"%f", locations.coordinate.latitude] atIndex:0];
-    [self.controller.lng insertObject:[NSString stringWithFormat:@"%f", locations.coordinate.longitude] atIndex:0];
+    NSString *latitude= [NSString stringWithFormat:@"%f", locations.coordinate.latitude];
+    NSString *longitude = [NSString stringWithFormat:@"%f", locations.coordinate.longitude];
+    [self.controller.lat insertObject:latitude atIndex:0];
+    [self.controller.lng insertObject:longitude atIndex:0];
     
     //Store formatted date
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
     timeFormatter.dateFormat = @"hh:mm:ss MM-dd-yyyy";
     NSString *dateString = [timeFormatter stringFromDate: locations.timestamp];
     [self.controller.time insertObject:[NSString stringWithFormat:@"%@", dateString] atIndex:0];
+    //[self convert:dateString To:longitude JSON:latitude];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:self.controller.lat forKey:@"latitude"];
+    [defaults setObject:self.controller.lng forKey:@"longitude"];
+    [defaults setObject:self.controller.time forKey:@"time"];
+    
+    [defaults synchronize];
+    
+    NSLog(@"Data saved");
 }
-
--(void) sendBackgroundLocationToServer:(CLLocation *)location
-{
-    
-    self.bgTask = [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:
-              ^{
-                  [[UIApplication sharedApplication] endBackgroundTask:_bgTask];
-                   }];
-                  
-                  [self saveLocations:location];
-    
-                  if (_bgTask != UIBackgroundTaskInvalid)
-                  {
-                      [[UIApplication sharedApplication] endBackgroundTask:_bgTask];
-                       _bgTask = UIBackgroundTaskInvalid;
-                       }
-}
+//
+//-(void)convert:(NSString*)time To:(NSString*)longitude JSON:(NSString*)latitude{
+//    
+//    NSString *jsonString = @"{\"Location Points\":[";
+//    jsonString = [[jsonString stringByAppendingString:@"{\"Timestamp\":\"" ]stringByAppendingString:time];
+//    jsonString = [[jsonString stringByAppendingString:@"\",\"Latitude\":\""]stringByAppendingString: latitude];
+//    jsonString = [[jsonString stringByAppendingString: @"\",\"Longitude\":\""]stringByAppendingString:longitude];
+//    jsonString = [ jsonString stringByAppendingString:@"\"}"];
+//    jsonString = [jsonString stringByAppendingString:@"]}"];
+//    NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+//    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//    NSLog(@"%@", json);
+//}
 @end
