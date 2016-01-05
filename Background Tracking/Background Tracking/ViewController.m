@@ -84,6 +84,9 @@
         
         NSLog(@"App is backgrounded. New location is %@", [locations lastObject]);
     }
+    else{
+        
+    }
     [self saveLocations:currentLocation];
 }
 
@@ -99,7 +102,7 @@
     timeFormatter.dateFormat = @"hh:mm:ss MM-dd-yyyy";
     NSString *dateString = [timeFormatter stringFromDate: locations.timestamp];
     [self.controller.time insertObject:[NSString stringWithFormat:@"%@", dateString] atIndex:0];
-    //[self convert:dateString To:longitude JSON:latitude];
+    [self convert:dateString To:longitude JSON:latitude];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -111,17 +114,17 @@
     
     NSLog(@"Data saved");
 }
-//
-//-(void)convert:(NSString*)time To:(NSString*)longitude JSON:(NSString*)latitude{
-//    
-//    NSString *jsonString = @"{\"Location Points\":[";
-//    jsonString = [[jsonString stringByAppendingString:@"{\"Timestamp\":\"" ]stringByAppendingString:time];
-//    jsonString = [[jsonString stringByAppendingString:@"\",\"Latitude\":\""]stringByAppendingString: latitude];
-//    jsonString = [[jsonString stringByAppendingString: @"\",\"Longitude\":\""]stringByAppendingString:longitude];
-//    jsonString = [ jsonString stringByAppendingString:@"\"}"];
-//    jsonString = [jsonString stringByAppendingString:@"]}"];
-//    NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-//    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//    NSLog(@"%@", json);
-//}
+
+-(void)convert:(NSString*)time To:(NSString*)longitude JSON:(NSString*)latitude{
+    
+    NSString *jsonString = @"{\"Location Points\":[";
+    jsonString = [[jsonString stringByAppendingString:@"{\"Timestamp\":\"" ]stringByAppendingString:time];
+    jsonString = [[jsonString stringByAppendingString:@"\",\"Latitude\":\""]stringByAppendingString: latitude];
+    jsonString = [[jsonString stringByAppendingString: @"\",\"Longitude\":\""]stringByAppendingString:longitude];
+    jsonString = [ jsonString stringByAppendingString:@"\"}"];
+    jsonString = [jsonString stringByAppendingString:@"]}"];
+    NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    NSLog(@"%@", json);
+}
 @end
