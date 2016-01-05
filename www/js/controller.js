@@ -2,8 +2,8 @@ var app=angular.module('location');
 
 app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform)
 { 
-
-  $scope.points = [];
+  //obtaining data from local storage if present
+  $scope.points = JSON.parse(window.localStorage.getItem("locationPoints"))|| [];
 
   //function to convert timestamp to hours
   var updateTime = function(timestamp){
@@ -14,15 +14,23 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
   //store values in array
   var storePositionValues = function(lat,lng,time){
-    $scope.points.push({
-      "lat": lat,
-      "long": lng, 
-      "time": time
-    });
+
+    $scope.points.push(
+      {
+        "lat":lat,
+        "long":lng,
+        "time":time
+      });
+    
+    window.localStorage.setItem("locationPoints",JSON.stringify($scope.points));
+    console.log(window.localStorage["locationPoints"])
   };
 
   //get current GeoLocation
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  var posOptions = {
+    timeout: 10000, 
+    enableHighAccuracy: false
+  };
 
   $cordovaGeolocation
     .getCurrentPosition(posOptions)
@@ -31,6 +39,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp));
     }, function(err) {
       // error
+      console.log(err)
     });
   
   //update GeoLocation on change in value
@@ -56,7 +65,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     stationaryRadius: 0,
     distanceFilter: 50, //minimum distance (in meters) mived before distance is recorded
     disableElasticity: false, // Used to return locations every 1 km at high speeds
-    locationUpdateInterval: 5000, //the minimum interval after which the location will get updated
+    locationUpdateInterval: 1000*60*10, //update location every 10 minutes
     minimumActivityRecognitionConfidence: 80,   // 0-100%.  Minimum activity-confidence for a state-change 
     fastestLocationUpdateInterval: 5000,
     activityRecognitionInterval: 5000, // recognises activity every 5 seconds. Increase to improve battery life

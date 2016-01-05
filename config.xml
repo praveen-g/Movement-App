@@ -4,6 +4,7 @@
     <gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" source="npm"/>
     <string>Allow Movement to track your location?</string>
   </gap:config-file>
+  <preference name="BackupWebStorage" value="none" />
   <name>Movement</name>
   <description>
         An Ionic Framework and Cordova project.
