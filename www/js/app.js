@@ -3,7 +3,69 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('location', ['ionic', 'ngCordova'])
+angular.module('location', ['ionic', 'ngCordova', 'movement-constants'])
+
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $urlRouterProvider.otherwise('/welcome');
+
+  $stateProvider
+    .state('register', {
+      url: '/register',
+      templateUrl: 'templates/register.html'
+    })
+
+    .state('welcome', {
+      url: '/welcome',  
+      templateUrl: 'templates/welcome.html',
+    })
+
+    .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+    })
+
+    .state('tab.venue',{
+      url:'/venue',
+      views:{
+        'tab-venue':{
+          templateUrl:'templates/tab-venue-default.html'
+          //contoller
+        }
+      } 
+    })
+
+    .state('tab.activity',{
+      url:'/activity',
+      views:{
+        'tab-activity':{
+          templateUrl:'templates/tab-activity.html',
+          //contoller
+        }
+    }
+  })
+
+    .state('tab.settings',{
+      url:'/settings',
+      views:{
+        'tab-settings':{
+          templateUrl:'templates/tab-settings.html',
+          //contoller
+        }
+      }
+    })
+
+    .state('tab.about',{
+      url:'/about',
+      views:{
+        'tab-about':{
+          templateUrl:'templates/tab-about.html'
+          //contoller
+        }
+    }
+  })
+  })
 
 .run(function($ionicPlatform,$http, $cordovaPush) {
   $ionicPlatform.ready(function() {
@@ -22,6 +84,10 @@ angular.module('location', ['ionic', 'ngCordova'])
     }
   });
 });
+
+angular.module('movement-constants',[])  
+  .constant('apiUrl', '@@apiUrl');
+
 
 /*  
   //setting up push notifications

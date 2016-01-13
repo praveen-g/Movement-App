@@ -1,0 +1,24 @@
+<ion-header-bar class="headerbar" >
+  <h1 class="title" align="center">ACTIVITY</i></h1>
+</ion-header-bar>
+
+<ion-content class="background" ng-controller="GeoCtrl">
+	<ion-refresher
+    	pulling-text="Pull to refresh..."
+    	on-refresh="refresh()">
+  	</ion-refresher>
+	<ion-list ng-controller="GeoCtrl"
+			  show-delete="shouldShowDelete"
+	          show-reorder="shouldShowReorder"
+	          can-swipe="listCanSwipe">
+	  	<ion-item ng-repeat="point in points | orderBy:'-time' track by $index"
+	            class="item-thumbnail-left">
+	            <h2> Latitude: {{point.latitude }}, Longitude: {{point.longitude}} </h2>
+	            <p>{{point.time.time}} on {{point.time.date}}</p>
+	            <ion-option-button class="button"
+                       ng-click="deleteItem(point)">
+      			Hide
+    			</ion-option-button>
+	   	</ion-item>
+	</ion-list>
+</ion-content>

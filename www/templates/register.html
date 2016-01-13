@@ -1,0 +1,19 @@
+<ion-header-bar class="headerbar" ng-controller="NavCtrl">
+   <button class="button button-clear button-positive" ng-click = "welcome()">Back</button>
+  <h1 class="title" align="center">SIGN UP</i></h1>
+</ion-header-bar>
+
+<ion-content class="background" ng-controller="NavCtrl">
+	<p  class="body padding" style="4vw">Enter your first name, last name and e-mail address to register. We promise not to spam you!</p>
+	<div class= "padding" style="padding-top:40%;">
+  		<label class="item item-input">
+    		<input type="text" placeholder="Full Name" ng-model="user.name">
+  		</label>
+  		<label class="item item-input">
+    		<input type="text" placeholder="Email Address" ng-model="user.email">
+  		</label>
+	</div>
+	<div style="padding-top:5%; padding-left:22%">
+		<button class="button" style="width:70%;" ng-click= "tab_dash(user)">Register</button>
+	</div>
+</ion-content>
