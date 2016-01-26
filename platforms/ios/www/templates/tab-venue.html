@@ -4,6 +4,7 @@
 </ion-header-bar>
 
 <ion-content class="background" ng-controller="GeoCtrl">
+	<ion-nav-view name="venue-visitors"></ion-nav-view>
 	<ion-refresher
     	pulling-text="Pull to refresh..."
     	on-refresh="refresh()">
@@ -12,8 +13,9 @@
 		<div class="item card" style="height:335px" ng-repeat="point in venue">
 			<div style="height:25px;"><h2> Location Name:{{point.name}}</h2></div>
 			<div id="map{{point.foursquare_id}}" data-tap-disabled="true" style="height:250px;"></div>
-			<div style="height:30px;padding-left:65%;padding-top:2%;"><button class="button" style="width:30%" ng-click= "reveal(point.foursquare_id)">See Visitors( {{point.totalReveals}} )</button></div>
+			<div style="height:30px;padding-left:65%;padding-top:2%;"><button class="button" style="width:30%" ng-click= "reveal(point.foursquare_id)" >See Visitors( {{point.totalReveals}} )</button></div>
 		</div>
+		
 	</ion-list>
 </ion-content>
 

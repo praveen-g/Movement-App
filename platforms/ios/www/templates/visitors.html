@@ -1,0 +1,13 @@
+<ion-header-bar class="headerbar" ng-controller="NavCtrl">
+   <button class="button button-clear button-positive" ng-click = "register()">Back</button>
+  <h1 class="title" align="center">VISITORS</i></h1>
+</ion-header-bar>
+
+<ion-content class="background" ng-controller="GeoCtrl">
+	Hello
+	<ion-list>
+		<ion-item ng-repeat="point in visitorNames">
+			{{point.fullname}}
+		</ion-item>
+	</ion-list>
+</ion-content>

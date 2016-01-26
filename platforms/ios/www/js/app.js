@@ -69,7 +69,17 @@ angular.module('location', ['ionic', 'ngCordova'])
           //contoller
         }
     }
-  });
+  })
+    .state('visitors',{
+      parent:'tab.venue',
+      url:'^/visitors',
+      views:{
+        'venue-visitors':{
+          templateUrl:'templates/visitors.html'
+        },
+    }
+      
+    });
 
   })
 
