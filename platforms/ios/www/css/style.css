@@ -1,38 +1,61 @@
-#background{
+.background{
 	background-color: #E8E8E8;
+	font-family: "Futura";
 }
-#headerbar{
+.headerbar{
 	background-color: #DBDBDB;
+	color: #6E6E6E;
+	font-size: 16px;
+	font-size: 5vw;
 }
-#highlighter{
-	background-color: #C2C2C2;
+.highlighter{
+	color: #63D4CF !important;
 }
 
-#button{
+.angular-google-map-container { height: 400px; }
+
+.pop-up-button .btncode{
+	margin-right: 10%;
+	margin-left: 10%;
+}
+
+.button{
 	color: white;
 	border-radius: 5px;
 	background-color: #63D4CF;
-	width: 80%;
-	font-size: 16px; 
-	font-size: 5vw;
+	font-size: 3vw;
 	border:0px solid;
+	font-family: "Futura";
+	position: fixed;
+	margin-right: 10px
 }
-#welcome {
+.welcome{
+	font-family: "Futura";
+	color: #6E6E6E;
+	width:100%;
+	padding-left:35%;
+  	padding-right: 15%;
+	font-size: 7vw;
+	padding-top:20%;
+	border-style: dotted;
+	position: fixed;
+}
+.body {
+	font-family: "Futura";
 	color: #6E6E6E;
 	margin:auto;
 	width:100%;
-  	padding-top:40%;
-  	padding-left:15%;
-  	padding-right: 15%;
-	font-family: "Helvetica";
-	font-size: 16px; 
 	font-size: 5vw;
 	line-height: 100%;
 	text-align: center;
 	position:fixed;
+	border-style: dotted;
+	padding-top:5%;
+	
 }
-#welcome_word{
-	#welcome;
-	font-weight: bold;
-	font-size: 6vw;
+
+.padding{
+	padding-left:15%;
+	padding-right: 15%;
+	padding-top: 20%
 }

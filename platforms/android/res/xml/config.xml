@@ -10,9 +10,6 @@
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
-    <feature name="BackgroundGeoLocation">
-        <param name="android-package" value="com.tenforwardconsulting.cordova.bgloc.BackgroundGeolocationPlugin" />
-    </feature>
     <feature name="NativeAudio">
         <param name="android-package" value="com.rjfun.cordova.plugin.nativeaudio.NativeAudio" />
     </feature>
@@ -36,6 +33,12 @@
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
+    <feature name="BackgroundGeoLocation">
+        <param name="android-package" value="com.tenforwardconsulting.cordova.bgloc.BackgroundGeolocationPlugin" />
+    </feature>
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -58,6 +61,13 @@
         <gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" source="npm" />
         <string>Allow Movement to track your location?</string>
     </gap:config-file>
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="16" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
     <name>Movement</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -67,11 +77,5 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <preference name="webviewbounce" value="false" />
-    <preference name="UIWebViewBounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
-    <preference name="BackupWebStorage" value="none" />
-    <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
 </widget>

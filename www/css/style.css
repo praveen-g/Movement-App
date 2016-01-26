@@ -12,13 +12,22 @@
 	color: #63D4CF !important;
 }
 
+.angular-google-map-container { height: 400px; }
+
+.pop-up-button .btncode{
+	margin-right: 10%;
+	margin-left: 10%;
+}
+
 .button{
 	color: white;
 	border-radius: 5px;
 	background-color: #63D4CF;
-	font-size: 4vw;
+	font-size: 3vw;
 	border:0px solid;
 	font-family: "Futura";
+	position: fixed;
+	margin-right: 10px
 }
 .welcome{
 	font-family: "Futura";
@@ -41,11 +50,12 @@
 	text-align: center;
 	position:fixed;
 	border-style: dotted;
-	padding-top:15%;
+	padding-top:5%;
 	
 }
 
 .padding{
 	padding-left:15%;
 	padding-right: 15%;
+	padding-top: 20%
 }

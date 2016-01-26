@@ -3,8 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('location', ['ionic', 'ngCordova', 'movement-constants'])
-
+angular.module('location', ['ionic', 'ngCordova'])
+//, uiGmapGoogleMapApiProvider
 .config(function($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise('/welcome');
@@ -12,7 +12,8 @@ angular.module('location', ['ionic', 'ngCordova', 'movement-constants'])
   $stateProvider
     .state('register', {
       url: '/register',
-      templateUrl: 'templates/register.html'
+      templateUrl: 'templates/register.html',
+      controller:'NavCtrl'
     })
 
     .state('welcome', {
@@ -26,12 +27,17 @@ angular.module('location', ['ionic', 'ngCordova', 'movement-constants'])
     templateUrl: 'templates/tabs.html'
     })
 
+    .state('venueDefault',{
+      url:'/venue/default',
+      templateUrl:'templates/tab-venue-default.html',
+      controller: 'GeoCtrl'
+    })
+
     .state('tab.venue',{
       url:'/venue',
       views:{
         'tab-venue':{
-          templateUrl:'templates/tab-venue-default.html'
-          //contoller
+          templateUrl:'templates/tab-venue.html',
         }
       } 
     })
@@ -40,8 +46,7 @@ angular.module('location', ['ionic', 'ngCordova', 'movement-constants'])
       url:'/activity',
       views:{
         'tab-activity':{
-          templateUrl:'templates/tab-activity.html',
-          //contoller
+          templateUrl:'templates/tabs-activity-default.html',
         }
     }
   })
@@ -65,6 +70,17 @@ angular.module('location', ['ionic', 'ngCordova', 'movement-constants'])
         }
     }
   })
+    .state('visitors',{
+      parent:'tab.venue',
+      url:'^/visitors',
+      views:{
+        'venue-visitors':{
+          templateUrl:'templates/visitors.html'
+        },
+    }
+      
+    });
+
   })
 
 .run(function($ionicPlatform,$http, $cordovaPush) {
@@ -84,9 +100,6 @@ angular.module('location', ['ionic', 'ngCordova', 'movement-constants'])
     }
   });
 });
-
-angular.module('movement-constants',[])  
-  .constant('apiUrl', '@@apiUrl');
 
 
 /*  

@@ -1,4 +1,10 @@
 {
   "name": "Movement",
-  "app_id": "2de65c68"
+  "app_id": "2de65c68",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://cors.api.com/api"
+    }
+  ]
 }

@@ -10,6 +10,8 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true"></script>
+    
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">-->
 
@@ -25,26 +27,11 @@
     
   </head>
   <body  class="platform-ios platform-cordova platform-webview">
-    <ion-header-bar id="headerbar">
-      <h1 class="title" align="center"><i class="icon ion-record dark"></i></h1>
-    </ion-header-bar>
 
-    <ion-content id="background" ng-controller='RegisterCtrl'>
-      <p id="welcome"><strong>Welcome!</strong> <br> Register to star contributing to the Movement display and connect with other attendees who have visited the same places as you.<br><br>
-        <button class="button" id="button" onclick= "window.open('/templates/register.html')">Register</button>
-      </p>
-    </ion-content>
+    <ui-view></ui-view>
+    
     <script src = "js/app.js"></script>
     <script src= "js/controller.js"></script>
-
+    
   </body>
 </html>
-<!--
-<ion-pane ng-controller="GeoCtrl">
- <ul class="list">
-            <li class="item item-text-wrap" ng-repeat="point in points | orderBy:'-time' track by $index">
-              ( Latitude: {{point.latitude }}, Longitude: {{point.longitude}} at {{point.time.time}} {{point.time.date}} )
-            </li>
-          </ul>
-</ion-pane>
--->

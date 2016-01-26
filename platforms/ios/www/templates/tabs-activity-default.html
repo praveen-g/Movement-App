@@ -1,0 +1,15 @@
+<ion-header-bar class="headerbar" >
+  <h1 class="title" align="center">ACTIVITY</i></h1>
+</ion-header-bar>
+
+<ion-content class="background" >
+	<!-- <ion-refresher
+    	pulling-text="Pull to refresh..."
+    	on-refresh="refresh()">
+  	</ion-refresher> -->
+	<ion-list >
+	  	<ion-item ng-repeat= "acts in visitor">
+	            <h2> {{acts.fullName}}</h2>
+	   	</ion-item>
+	</ion-list>
+</ion-content>

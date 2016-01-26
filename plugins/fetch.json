@@ -47,14 +47,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-geolocation": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-geolocation"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-dialogs": {
         "source": {
             "type": "registry",
@@ -68,14 +60,6 @@
             "type": "git",
             "url": "https://github.com/transistorsoft/cordova-background-geolocation-lt.git",
             "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-mauron85-background-geolocation": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-mauron85-background-geolocation"
         },
         "is_top_level": true,
         "variables": {}
@@ -110,6 +94,23 @@
             "type": "git",
             "url": "https://github.com/katzer/cordova-plugin-background-mode.git",
             "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-geolocation": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-geolocation.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-mauron85-background-geolocation": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-mauron85-background-geolocation"
         },
         "is_top_level": true,
         "variables": {}
