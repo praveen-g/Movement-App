@@ -66,7 +66,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                 console.log("Venue stored")
                 newVenue["flag"]=0
                 console.log(newVenue)
-                $scope.venue=newVenue
+                $scope.venue=[newVenue]
                 renderMap(newVenue)
                 window.localStorage.setItem("venues",JSON.stringify($scope.venue))
               }
