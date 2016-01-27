@@ -3,13 +3,13 @@
 </ion-header-bar>
 
 <ion-content class="background" ng-controller="GeoCtrl">
-	<!-- <ion-refresher
+	 <ion-refresher
     	pulling-text="Pull to refresh..."
     	on-refresh="refresh()">
-  	</ion-refresher> -->
+  	</ion-refresher>
 	<ion-list >
-	  	<ion-item ng-repeat= "acts in visitor">
-	            <h2> {{acts.fullName}}</h2>
+	  	<ion-item ng-repeat= "acts in activity">
+	            <h2> {{acts.message}}</h2>
 	   	</ion-item>
 	</ion-list>
 </ion-content>

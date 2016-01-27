@@ -39,7 +39,7 @@ angular.module('location', ['ionic', 'ngCordova'])
         'tab-venue':{
           templateUrl:'templates/tab-venue.html',
         }
-      } 
+      }, 
     })
 
     .state('tab.activity',{

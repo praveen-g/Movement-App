@@ -13,7 +13,7 @@ angular.module('location', ['ionic', 'ngCordova'])
     .state('register', {
       url: '/register',
       templateUrl: 'templates/register.html',
-      controller:'GeoCtrl'
+      controller:'NavCtrl'
     })
 
     .state('welcome', {
@@ -27,13 +27,10 @@ angular.module('location', ['ionic', 'ngCordova'])
     templateUrl: 'templates/tabs.html'
     })
 
-    .state('tab.venueDefault',{
+    .state('venueDefault',{
       url:'/venue/default',
-      views:{
-        'tab-venue-default':{
-          templateUrl:'templates/tab-venue-default.html',
-        }
-      } 
+      templateUrl:'templates/tab-venue-default.html',
+      controller: 'GeoCtrl'
     })
 
     .state('tab.venue',{
@@ -72,7 +69,17 @@ angular.module('location', ['ionic', 'ngCordova'])
           //contoller
         }
     }
-  });
+  })
+    .state('visitors',{
+      parent:'tab.venue',
+      url:'^/visitors',
+      views:{
+        'venue-visitors':{
+          templateUrl:'templates/visitors.html'
+        },
+    }
+      
+    });
 
   })
 

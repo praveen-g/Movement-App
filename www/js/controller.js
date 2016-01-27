@@ -10,20 +10,20 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   //function to convert timestamp to hours
   var updateTime = function(timestamp){
     var d = new Date(timestamp);
-      var date = (d.getMonth()+1)+'/'+d.getDate()+ '/' +d.getFullYear()
-      var time = ('0' + d.getHours()).slice(-2)+':'+('0' + d.getMinutes()).slice(-2)+':'+('0' + d.getSeconds()).slice(-2)
-      return {"time":time, "date":date, "timestamp":timestamp};
+    var date = (d.getMonth()+1)+'/'+d.getDate()+ '/' +d.getFullYear()
+    var time = ('0' + d.getHours()).slice(-2)+':'+('0' + d.getMinutes()).slice(-2)+':'+('0' + d.getSeconds()).slice(-2)
+    return {"time":time, "date":date, "timestamp":timestamp};
   };
 
   var recordPositonValues = function(lat,lng,time){
     //store location values before processing
     $scope.temporaryPoints.push({
-          "deviceId":$cordovaDevice.getUUID(),
-          //"deviceId": 2345678,
-          "lat":lat,
-          "llong":lng,
-          "time":time       
-      });
+      "deviceId":$cordovaDevice.getUUID(),
+      //"deviceId": 234567,
+      "lat":lat,
+      "llong":lng,
+      "time":time       
+    });
   };
 
   //store values in array
@@ -31,30 +31,54 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     
     //speed is in meters per second.
     if (speed<=2) {
-
       if ($scope.temporaryPoints.length==0){
-          recordPositonValues(lat,lng,time);
-          console.log("Initial logging")
+        recordPositonValues(lat,lng,time);
       }
       else{
-          console.log($scope.temporaryPoints)
-          var lastLocation = $scope.temporaryPoints[0] // get the last recorded location
+        var lastLocation = $scope.temporaryPoints[0] // get the last recorded location
 
-          //check if user is in same location
-          if((lat.toFixed(4)-lastLocation.lat.toFixed(4))<0.2 && (lng.toFixed(4)-lastLocation.llong.toFixed(4))<0.2){
+        //check if user is in same location
+        if((lat.toFixed(4)-lastLocation.lat.toFixed(4))<0.2 && (lng.toFixed(4)-lastLocation.llong.toFixed(4))<0.2){
+          console.log(time)
+          //compute time difference. Store locations only if more than 5 minutes
+          if((time.timestamp- lastLocation.time.timestamp) > 5*60*1000){
 
-              console.log("Same location")
-              console.log(time.timestamp)
-              console.log(lastLocation.time.timestamp)
-              //compute time difference. Store locations only if more than 5 minutes
-              if((time.timestamp- lastLocation.time.timestamp) > 10*60*1000){
+            $scope.temporaryPoints=[]
+            recordPositonValues(lat,lng,time);
 
-                  console.log("time is more than 10 min")
-                  $scope.temporaryPoints=[]
-                  recordPositonValues(lat,lng,time);
-
+            $http({
+              url: "http://54.152.112.50:3000/locations/translate/",
+              method: 'POST',
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+              },
+              data:{"lat":lat,"lng":lng}
+            })
+            .then(function(res){
+              var present=0
+              newVenue=res.data[0]
+              console.log("translating")
+              if ($scope.venue.length ==0){
+                console.log("Venue stored")
+                newVenue["flag"]=0
+                console.log(newVenue)
+                $scope.venue=newVenue
+                renderMap(newVenue)
+                window.localStorage.setItem("venues",JSON.stringify($scope.venue))
+              }
+              else{
+                angular.forEach($scope.venue, function(value,key){
+                  if (value.foursquare_id == newVenue.foursquare_id){
+                    present=1
+                  }
+                });
+                if (present==0){
                   $http({
-                    url: "http://54.152.112.50:3000/locations/translate/",
+                    url: "http://54.152.112.50:3000/locations/log/",
                     method: 'POST',
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     transformRequest: function(obj) {
@@ -62,78 +86,41 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                          for(var p in obj)
                          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                          return str.join("&");
-                     },
-                     data:{"lat":lat,"lng":lng}
-                    //data: {"lat":40.782905,"lng":-73.965350}
+                    },
+                    data: {"venueId":newVenue.foursquare_id}
                   })
                   .then(function(res){
-                    var present=0
-                    newVenue=res.data[0]
-                    console.log("translating")
-                    $scope.venue= JSON.parse(window.localStorage.getItem("venues"))|| [];
-                    if ($scope.venue.length ==0){
-                      console.log("Venue stored")
-                      newVenue["flag"]=0
-                      console.log(newVenue)
-                      $scope.venue=newVenue
-                      renderMap(newVenue)
-                      window.localStorage.setItem("venues",JSON.stringify($scope.venue))
-                    }
-                    else{
-                    angular.forEach($scope.venue, function(value,key){
-                      if (value.foursquare_id == newVenue.foursquare_id){
-                        present=1
-                      }
-                    });
-                    }
-                    
-                      if (present==0){
-
-                      $http({
-                        url: "http://54.152.112.50:3000/locations/log/",
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                        transformRequest: function(obj) {
-                             var str = [];
-                             for(var p in obj)
-                             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                             return str.join("&");
-                         },
-                        data: {"venueId":newVenue.foursquare_id}
-                        })
-                        .then(function(res){
-                          newVenue["flag"]=0;
-                          console.log(newVenue)
-                          console.log("Logging")
-                          $scope.venue.push(newVenue)
-
-                          renderMap(newVenue)
-
-                          window.localStorage.setItem("venues",JSON.stringify($scope.venue))
-
-                        })
-
-                        .catch(function(err){
-                        console.log(err)
-                        });    
-                    }
+                    console.log("Successfully logged")
+                    newVenue["flag"]=0
+                    $scope.venue.push(newVenue)
+                    renderMap(newVenue)
+                    window.localStorage.setItem("venues",JSON.stringify($scope.venue))
+                    console.log($scope.venue)
                   })
-                .catch(function(err){
-                  console.log(err)
-                });
-              }       
-            }
-          //if user is in different location, record the next location
-          else{
-            console.log("different location")
-            $scope.temporaryPoints=[]
-              recordPositonValues(lat,lng,time);
-          };
+                  .catch(function(err){
+                    console.log(err)
+                  });    
+                }
+              }
+            })
+            .catch(function(err){
+              console.log(err)
+            });
+          }       
+        }
+        //if user is in different location, record the next location
+        else{
+          console.log("different location")
+          $scope.temporaryPoints=[]
+          recordPositonValues(lat,lng,time);
+        };
       };      
     }
     window.localStorage.setItem("temporaryPoints", JSON.stringify($scope.temporaryPoints));
   };
- 
+
+  console.log($scope.venue)
+
   //get current GeoLocation
   var posOptions = {
     frequency: 15000,
@@ -156,11 +143,11 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         $window.alert("Could not acquire location")
       }
       else{
-        $window.alert("Location timed out")
+        //$window.alert("Location timed out")
       }
       console.log(err)
     });
-  
+
   //update GeoLocation on change in value
   var watchOptions = {
     frequency : 15000,
@@ -170,22 +157,20 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
   var watch = $cordovaGeolocation.watchPosition(watchOptions);
   
-  watch.then(
-    null,
-    function(err) {
-      if (err.code == 1){
-        $window.alert("Please enable location tracking")
-      }
-      else if (err.code == 2){
-        $window.alert("Could not acquire location")
-      }
-      else{
-        $window.alert("Location timed out")
-      }
-    },
-    function(position) {
-      storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp),position.coords.speed);
-    });
+  watch.then(null, function(err) {
+    if (err.code == 1){
+      $window.alert("Please enable location tracking")
+    }
+    else if (err.code == 2){
+      $window.alert("Could not acquire location")
+    }
+    else{
+      //$window.alert("Location timed out")
+    }
+  },
+  function(position) {
+    storePositionValues(position.coords.latitude,position.coords.longitude,updateTime(position.timestamp),position.coords.speed);
+  });
 
   //storing configurations for background locations
   var options= {
@@ -235,11 +220,11 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   //activity stuff
 
 
-   $scope.activity=JSON.parse(window.localStorage.getItem("activity"))|| [];
+  $scope.activity=JSON.parse(window.localStorage.getItem("activity"))|| [];
 
-   var activityTab= function(){
+  var activityTab= function(){
 
-   angular.forEach($scope.venue, function(value,key){
+    angular.forEach($scope.venue, function(value,key){
       var str=""
       $http({
         url: "http://54.152.112.50:3000/locations/activity/?deviceId="+$cordovaDevice.getUUID()+"&locationId="+value.foursquare_id,
@@ -247,7 +232,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         contentType: 'application/json',
         //headers: { 'Authorization': 'Bearer TOKEN' }
       }).then(function(res){
-        
+          
         if(value.flag==1){
           angular.forEach(value.revealedSince, function(value,key){
             str+=value + " "
@@ -257,10 +242,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         else{
           str= value.revealedSince.length + "people have visited "+value.name
         }
-    })
+      })
       $scope.activity.push({"message":str})
-   });
-   window.localStorage.setItem("activity", JSON.stringify($scope.activity));
+    });
+    window.localStorage.setItem("activity", JSON.stringify($scope.activity));
   };
 
 
@@ -280,10 +265,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     var latLng = new google.maps.LatLng( obj.lat, obj.lng);
     
     var mapOptions = {
-        center: latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
     display_map= new google.maps.Map(document.getElementById("map"+obj.foursquare_id), mapOptions)
      $scope.map.push(display_map)
  
@@ -299,7 +284,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
     console.log("in refresh")
     angular.forEach($scope.venue, function(value, key){
-
+      console.log(value)
      renderMap(value)
       
       var locationId = value.foursquare_id
@@ -381,14 +366,31 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
        confirmPopup.then(function(res) {
 
           if (res) {
-            getUserDevices(locationObject.foursquare_id)
-            $scope.revealedLocations.push(locationObject.foursquare_id)
-            window.localStorage.setItem("revealedLocations", JSON.stringify($scope.revealedLocations));
-            locationObject[flag]=1
-            console.log($scope.visitorNames)
+            $http({
+                  url: "http://54.152.112.50:3000/locations/reveal/",
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                      transformRequest: function(obj) {
+                       var str = [];
+                       for(var p in obj)
+                       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                       return str.join("&");
+                  },
+                data: {"deviceId":$cordovaDevice.getUUID(),"locationId":locationObject.foursquare_id}
+            })
+            .then(function(res){
+                getUserDevices(locationObject.foursquare_id)
+                $scope.revealedLocations.push(locationObject.foursquare_id)
+                window.localStorage.setItem("revealedLocations", JSON.stringify($scope.revealedLocations));
+                locationObject[flag]=1
+                console.log($scope.visitorNames)
+                $state.go("visitors")
+                console.log("Going to visitors")
+            })
+           .catch(function(err){
+            console.log(err.data.message)
+          });
 
-            $state.go("visitors")
-            console.log("Going to visitors")
           } else {
 
              console.log('You clicked on "Cancel" button');
@@ -432,7 +434,7 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
     $scope.userDetails={
       "fullname": user.name,
       "emailId":user.email,
-      //"deviceId": 2345678
+      //"deviceId": 234567
       "deviceId": $cordovaDevice.getUUID()
       
     };

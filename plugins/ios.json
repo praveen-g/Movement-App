@@ -37,10 +37,10 @@
         "de.appplant.cordova.plugin.background-mode": {
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         },
-        "cordova-plugin-geolocation": {
+        "cordova-plugin-mauron85-background-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         },
-        "cordova-plugin-mauron85-background-geolocation": {
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.movement130724"
         }
     },
