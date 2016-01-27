@@ -27,6 +27,10 @@ angular.module('location', ['ionic', 'ngCordova'])
     templateUrl: 'templates/tabs.html'
     })
 
+
+
+
+
     .state('venueDefault',{
       url:'/venue/default',
       templateUrl:'templates/tab-venue-default.html',
@@ -40,6 +44,16 @@ angular.module('location', ['ionic', 'ngCordova'])
           templateUrl:'templates/tab-venue.html',
         }
       }, 
+    })
+
+    .state('tab.visitors',{
+      url:'/venue/visitors',
+      views:{
+        'tab-venue':{
+          templateUrl:'templates/visitors.html'
+        },
+      }
+      
     })
 
     .state('tab.activity',{
@@ -68,17 +82,7 @@ angular.module('location', ['ionic', 'ngCordova'])
           templateUrl:'templates/tab-about.html'
           //contoller
         }
-    }
-  })
-    .state('visitors',{
-      parent:'tab.venue',
-      url:'^/visitors',
-      views:{
-        'venue-visitors':{
-          templateUrl:'templates/visitors.html'
-        },
-    }
-      
+      }
     });
 
   })

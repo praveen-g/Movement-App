@@ -41,7 +41,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         if((lat.toFixed(4)-lastLocation.lat.toFixed(4))<0.2 && (lng.toFixed(4)-lastLocation.llong.toFixed(4))<0.2){
           console.log(time)
           //compute time difference. Store locations only if more than 5 minutes
-          if((time.timestamp- lastLocation.time.timestamp) > 5*60*1000){
+          if((time.timestamp- lastLocation.time.timestamp) > 1*60*1000){
 
             $scope.temporaryPoints=[]
             recordPositonValues(lat,lng,time);
@@ -321,7 +321,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
           method: 'GET',
           contentType: 'application/json'
          }).then(function(res){
-            
+            console.log("In get user names")
             console.log(res.data)
             $scope.visitorNames=res.data
 
@@ -344,9 +344,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       if(keepGoing=="True"){
         if (locationObject.foursquare_id==value){
           getUserDevices(locationObject.foursquare_id)
+          console.log($scope.visitorNames)
           callPopup="False"
           keepGoing="False"
-          $state.go("visitors")
+          $state.go("tab.visitors")
           console.log("Going to visitors")
         }
       }
@@ -384,7 +385,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                 window.localStorage.setItem("revealedLocations", JSON.stringify($scope.revealedLocations));
                 locationObject[flag]=1
                 console.log($scope.visitorNames)
-                $state.go("visitors")
+                $state.go("tab.visitors")
                 console.log("Going to visitors")
             })
            .catch(function(err){
