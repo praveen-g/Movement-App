@@ -11,7 +11,7 @@
     	pulling-text="Pull to refresh..."
     	on-refresh="refresh()">
   	</ion-refresher>
-	<ion-list card>
+	<ion-list card class="wrapping-list">
 		<div class="item card" style="height:335px" ng-repeat="point in venue">
 			<div class="word-wrapping" style="height:25px;"><h2>{{point.name}}</h2></div>
 			<div id="map{{point.foursquare_id}}" data-tap-disabled="true" style="height:250px;"></div>

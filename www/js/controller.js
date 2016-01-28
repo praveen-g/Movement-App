@@ -1,11 +1,11 @@
 var app=angular.module('location');
 
-app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform, $cordovaDevice, $http, $state, $window, $ionicPopup)
+app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform, $cordovaDevice, $http, $state, $ionicPopup)
 { 
   //obtaining data from local storage if present
   $scope.temporaryPoints = JSON.parse(window.localStorage.getItem("temporaryPoints"))|| [];
   $scope.venue = JSON.parse(window.localStorage.getItem("venues"))|| [];
-  console.log($scope.venue)
+  console.log($scope.venue.length)
   //function to convert timestamp to hours
   var updateTime = function(timestamp){
     var d = new Date(timestamp);
@@ -64,10 +64,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
               if ($scope.venue.length ==0){
                 console.log("Venue stored")
                 newVenue.flag="0"
-                console.log(newVenue)
                 $scope.venue=[newVenue]
                 renderMap(newVenue)
                 window.localStorage.setItem("venues",JSON.stringify($scope.venue))
+                console.log(JSON.parse(window.localStorage.getItem("venues")).length)
               }
               else{
                 angular.forEach($scope.venue, function(value,key){
@@ -134,10 +134,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       // error
       console.log(err)
       if (err.code == 1){
-        $window.alert("Please enable location tracking")
+        window.alert("Please enable location tracking")
       }
       else if (err.code == 2){
-        $window.alert("Could not acquire location")
+        window.alert("Could not acquire location")
       }
       else{
         //$window.alert("Location timed out")
@@ -156,10 +156,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   
   watch.then(null, function(err) {
     if (err.code == 1){
-      $window.alert("Please enable location tracking")
+      window.alert("Please enable location tracking")
     }
     else if (err.code == 2){
-      $window.alert("Could not acquire location")
+      window.alert("Could not acquire location")
     }
     else{
       //$window.alert("Location timed out")
@@ -215,13 +215,14 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   });
 
 
+
   //activity stuff
 
 
   $scope.activity=JSON.parse(window.localStorage.getItem("activity"))|| [];
 
-  var activityTab= function(){
-
+  $scope.refresh_activityTab= function(){
+    $scope.activity=[]
     angular.forEach($scope.venue, function(value,key){
       var str=""
       $http({
@@ -230,26 +231,36 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         contentType: 'application/json',
         //headers: { 'Authorization': 'Bearer TOKEN' }
       }).then(function(res){
-          
-        if(value.flag=="1"){
-          angular.forEach(value.revealedSince, function(value,key){
-            str+=value + " "
-          });
-          str+=" have visited"+ value.name + "too."
+    
+       if(res.data[0].revealedSince!=null){
+         if (value.flag=="1"){
+          str=""
+          angular.forEach(res.data[0].revealedSince, function(value,key){
+            str+=value+' '
+          })
+          str+=" have visited "+value.name
+         }
+         else{
+          str=""
+          str=res.data[0].revealedSince.length
+         }
+         str+=" people have visited "+value.name
         }
-        else{
-          str= value.revealedSince.length + "people have visited "+value.name
-        }
-      })
-      $scope.activity.push({"message":str})
-    });
+        $scope.activity.push({"message":str})
+
+    }).finally(function() {
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+     });
+    console.log($scope.activity)
     window.localStorage.setItem("activity", JSON.stringify($scope.activity));
-  };
-  
+  });
+  }
+
   // venue stuff
 
   $scope.reg= JSON.parse(window.localStorage.getItem("Registered")) || {"value":"False"}
-  $scope.activity= [{"message":"Updates will appear here. Stay tuned!"}];
+  $scope.activity= [{"message":"Refresh for recent activity!"}];
   $scope.visitor=[]
 
   $scope.map=[]
@@ -272,14 +283,11 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         animation: google.maps.Animation.DROP,
         position: latLng
     });      
-    console.log(marker)
   }
 
   $scope.refresh=function(){
 
-    console.log("in refresh")
     angular.forEach($scope.venue, function(value, key){
-      console.log(value)
      renderMap(value)
       
       var locationId = value.foursquare_id
@@ -294,17 +302,13 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       }).then(function(res){
         
         value.totalReveals = res.data.length;
-        console.log(value.totalReveals)
 
     }).finally(function() {
        // Stop the ion-refresher from spinning
-       console.log("Refresh complete")
+       $scope.$broadcast('scroll.refreshComplete');
      });   
     
-    })
-
-    activityTab()
-    
+    }) 
  };
       
 
@@ -321,6 +325,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
          }).catch(function(err){
             console.log(err)
          })
+         console.log($scope.visitorNames)
       }
 
 
@@ -377,7 +382,12 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                 getUserDevices(locationObject.foursquare_id)
                 $scope.revealedLocations.push(locationObject.foursquare_id)
                 window.localStorage.setItem("revealedLocations", JSON.stringify($scope.revealedLocations));
-                locationObject.flag="1"
+                angular.forEach($scope.venue, function(value,key){
+                    if (value.foursquare_id == locationObject.foursquare_id){
+                      value.flag="1"
+                      console.log(value)
+                    }
+                });
                 $state.go("tab.visitors")
             })
            .catch(function(err){
@@ -403,8 +413,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevice, $http){
 
   $scope.reg= JSON.parse(window.localStorage.getItem("Registered")) || {"value":"False"}
-  $scope.venue = JSON.parse(window.localStorage.getItem("venues"))|| [];
-  console.log($scope.venue.length)
   if ($scope.reg["value"] == "True"){
         $state.go("tab.venue") 
   }
@@ -415,7 +423,6 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
       $state.go("register");
     }
     else{
-      console.log($scope.venue.length)
       $state.go('tab.venue')
     }
   }
@@ -446,9 +453,6 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
       data: $scope.userDetails
     })
       .then(function(res){
-
-        console.log(res)
-        console.log($scope.userDetails)
         if(res.data.status=="success"){
 
           $scope.reg.value="True"

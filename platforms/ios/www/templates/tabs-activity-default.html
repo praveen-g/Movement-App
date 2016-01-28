@@ -5,10 +5,10 @@
 <ion-content class="background">
 	 <ion-refresher
     	pulling-text="Pull to refresh..."
-    	on-refresh="refresh()">
+    	on-refresh="refresh_activityTab()">
   	</ion-refresher>
 	<ion-list >
-	  	<ion-item ng-repeat= "acts in activity">
+	  	<ion-item class="wrapping-list" ng-repeat= "acts in activity">
 	            <h2> {{acts.message}}</h2>
 	   	</ion-item>
 	</ion-list>

@@ -59,3 +59,8 @@
 	padding-right: 15%;
 	padding-top: 20%
 }
+
+.wrapping-list .item-content, .wrapping-list .item {
+    overflow: initial;
+    white-space: initial;
+}
