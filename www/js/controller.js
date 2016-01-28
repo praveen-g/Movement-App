@@ -2,11 +2,10 @@ var app=angular.module('location');
 
 app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform, $cordovaDevice, $http, $state, $window, $ionicPopup)
 { 
-  console.log("in Geo Control")
   //obtaining data from local storage if present
   $scope.temporaryPoints = JSON.parse(window.localStorage.getItem("temporaryPoints"))|| [];
   $scope.venue = JSON.parse(window.localStorage.getItem("venues"))|| [];
-
+  console.log($scope.venue)
   //function to convert timestamp to hours
   var updateTime = function(timestamp){
     var d = new Date(timestamp);
@@ -64,7 +63,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
               console.log("translating")
               if ($scope.venue.length ==0){
                 console.log("Venue stored")
-                newVenue["flag"]=0
+                newVenue.flag="0"
                 console.log(newVenue)
                 $scope.venue=[newVenue]
                 renderMap(newVenue)
@@ -91,7 +90,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                   })
                   .then(function(res){
                     console.log("Successfully logged")
-                    newVenue["flag"]=0
+                    newVenue.flag="0"
                     $scope.venue.push(newVenue)
                     renderMap(newVenue)
                     window.localStorage.setItem("venues",JSON.stringify($scope.venue))
@@ -118,8 +117,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     }
     window.localStorage.setItem("temporaryPoints", JSON.stringify($scope.temporaryPoints));
   };
-
-  console.log($scope.venue)
 
   //get current GeoLocation
   var posOptions = {
@@ -217,6 +214,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     }
   });
 
+
   //activity stuff
 
 
@@ -233,7 +231,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         //headers: { 'Authorization': 'Bearer TOKEN' }
       }).then(function(res){
           
-        if(value.flag==1){
+        if(value.flag=="1"){
           angular.forEach(value.revealedSince, function(value,key){
             str+=value + " "
           });
@@ -247,17 +245,14 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     });
     window.localStorage.setItem("activity", JSON.stringify($scope.activity));
   };
-
-
+  
   // venue stuff
 
   $scope.reg= JSON.parse(window.localStorage.getItem("Registered")) || {"value":"False"}
-  $scope.activity= [{"venue":"Updates will appear here. Stay tuned!"}];
+  $scope.activity= [{"message":"Updates will appear here. Stay tuned!"}];
   $scope.visitor=[]
 
-
   $scope.map=[]
-  var centers=[]
 
   var renderMap= function(obj){
 
@@ -303,7 +298,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
     }).finally(function() {
        // Stop the ion-refresher from spinning
-       $scope.$broadcast('scroll.refreshComplete');
+       console.log("Refresh complete")
      });   
     
     })
@@ -321,8 +316,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
           method: 'GET',
           contentType: 'application/json'
          }).then(function(res){
-            console.log("In get user names")
-            console.log(res.data)
             $scope.visitorNames=res.data
 
          }).catch(function(err){
@@ -348,7 +341,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
           callPopup="False"
           keepGoing="False"
           $state.go("tab.visitors")
-          console.log("Going to visitors")
         }
       }
     });
@@ -380,13 +372,13 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                 data: {"deviceId":$cordovaDevice.getUUID(),"locationId":locationObject.foursquare_id}
             })
             .then(function(res){
+                console.log(res.data)
+
                 getUserDevices(locationObject.foursquare_id)
                 $scope.revealedLocations.push(locationObject.foursquare_id)
                 window.localStorage.setItem("revealedLocations", JSON.stringify($scope.revealedLocations));
-                locationObject[flag]=1
-                console.log($scope.visitorNames)
+                locationObject.flag="1"
                 $state.go("tab.visitors")
-                console.log("Going to visitors")
             })
            .catch(function(err){
             console.log(err.data.message)
@@ -427,6 +419,7 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
       $state.go('tab.venue')
     }
   }
+
   $scope.welcome= function(){
     $state.go("welcome");
   }

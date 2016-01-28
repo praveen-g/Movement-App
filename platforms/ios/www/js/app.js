@@ -28,13 +28,13 @@ angular.module('location', ['ionic', 'ngCordova'])
     })
 
 
-
-
-
-    .state('venueDefault',{
+    .state('tab.venueDefault',{
       url:'/venue/default',
-      templateUrl:'templates/tab-venue-default.html',
-      controller: 'GeoCtrl'
+      views:{
+        'tab-venue':{
+          templateUrl:'templates/tab-venue-default.html',
+        }
+      }
     })
 
     .state('tab.venue',{
