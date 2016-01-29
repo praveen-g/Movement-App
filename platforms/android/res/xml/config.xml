@@ -75,7 +75,7 @@
     <author email="pmg83@cornell.edu">
       Praveen Gupta
     </author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.53.19:8100" />
     <access origin="*" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
 </widget>

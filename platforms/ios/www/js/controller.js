@@ -5,7 +5,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   //obtaining data from local storage if present
   $scope.temporaryPoints = JSON.parse(window.localStorage.getItem("temporaryPoints"))|| [];
   $scope.venue = JSON.parse(window.localStorage.getItem("venues"))|| [];
-  console.log($scope.venue.length)
   //function to convert timestamp to hours
   var updateTime = function(timestamp){
     var d = new Date(timestamp);
@@ -17,8 +16,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   var recordPositonValues = function(lat,lng,time){
     //store location values before processing
     $scope.temporaryPoints.push({
-      "deviceId":$cordovaDevice.getUUID(),
-      //"deviceId": 234567,
+      "deviceId":5690,
       "lat":lat,
       "llong":lng,
       "time":time       
@@ -65,9 +63,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                 console.log("Venue stored")
                 newVenue.flag="0"
                 $scope.venue=[newVenue]
-                renderMap(newVenue)
                 window.localStorage.setItem("venues",JSON.stringify($scope.venue))
                 console.log(JSON.parse(window.localStorage.getItem("venues")).length)
+                renderMap(newVenue)
+                
               }
               else{
                 angular.forEach($scope.venue, function(value,key){
@@ -92,9 +91,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                     console.log("Successfully logged")
                     newVenue.flag="0"
                     $scope.venue.push(newVenue)
-                    renderMap(newVenue)
                     window.localStorage.setItem("venues",JSON.stringify($scope.venue))
                     console.log($scope.venue)
+                    renderMap(newVenue)
+                    
                   })
                   .catch(function(err){
                     console.log(err)
@@ -137,6 +137,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         window.alert("Please enable location tracking")
       }
       else if (err.code == 2){
+    
         window.alert("Could not acquire location")
       }
       else{
@@ -215,6 +216,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   });
 
 
+
   //activity stuff
 
 
@@ -225,7 +227,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     angular.forEach($scope.venue, function(value,key){
       var str=""
       $http({
-        url: "http://54.152.112.50:3000/locations/activity/?deviceId="+$cordovaDevice.getUUID()+"&locationId="+value.foursquare_id,
+        url: "http://54.152.112.50:3000/locations/activity/?deviceId=5690&locationId="+value.foursquare_id,
         method: 'GET',
         contentType: 'application/json',
         //headers: { 'Authorization': 'Bearer TOKEN' }
@@ -373,7 +375,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                        return str.join("&");
                   },
-                data: {"deviceId":$cordovaDevice.getUUID(),"locationId":locationObject.foursquare_id}
+                data: {"deviceId":5690,"locationId":locationObject.foursquare_id}
             })
             .then(function(res){
                 console.log(res.data)
@@ -434,8 +436,7 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
     $scope.userDetails={
       "fullname": user.name,
       "emailId":user.email,
-      //"deviceId": 234567
-      "deviceId": $cordovaDevice.getUUID()
+      "deviceId": 5690
       
     };
     //post user name, user email and device id to the server
