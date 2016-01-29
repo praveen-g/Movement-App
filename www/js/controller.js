@@ -255,7 +255,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
     //get timestamp of last refresh
     var activity_time = JSON.parse(window.localStorage.getItem("activity_time"))|| {"time": -500};
-    console.log(Date.now())
 
     //allow refresh only after 30 seconds
     if (Math.floor((Date.now()-activity_time.time) / 1000)>30){
@@ -290,7 +289,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
          $scope.$broadcast('scroll.refreshComplete');
         });
       });
-      window.localStorage.setItem("activity_time", JSON.stringify({"time":Math.floor(Date.now() / 1000)}));
+      window.localStorage.setItem("activity_time", JSON.stringify({"time":Date.now()}));
        
       console.log($scope.activity)
       window.localStorage.setItem("activity", JSON.stringify($scope.activity));
@@ -341,24 +340,24 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       value.totalReveals=revealedUsers(value)
       renderMap(value)
     });    
- };
+  };
       
 
   $scope.visitorNames=[]
   var getUserDevices = function(locationId){
 
-         $http({
-          url:"http://54.152.112.50:3000/locations/revealedusers?locationId="+locationId,
-          method: 'GET',
-          contentType: 'application/json'
-         }).then(function(res){
-            $scope.visitorNames=res.data
+    $http({
+      url:"http://54.152.112.50:3000/locations/revealedusers?locationId="+locationId,
+      method: 'GET',
+      contentType: 'application/json'
+    }).then(function(res){
+      $scope.visitorNames=res.data
 
-         }).catch(function(err){
-            console.log(err)
-         })
-         console.log($scope.visitorNames)
-      }
+    }).catch(function(err){
+      console.log(err)
+    })
+    console.log($scope.visitorNames)
+  }
 
 
   $scope.reveal= function(locationObject){
@@ -383,68 +382,55 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     });
     //call pop if location not revealed
     if(callPopup=="True"){
-        var confirmPopup = $ionicPopup.confirm({
-
-          title: 'Do you want to reveal your identity',
-
-          template: "See visitors allows you to reveal your identity to other people who have also visited this venue.<br> Your identity will only be visible to other people who choose to reveal their identity.<br> Do you want to continue?",
-
-          cancelText:"Don't Allow",
-
-       });
-
-       confirmPopup.then(function(res) {
-
-          if (res) {
-            $http({
-                  url: "http://54.152.112.50:3000/locations/reveal/",
-                  method: 'POST',
-                  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                      transformRequest: function(obj) {
-                       var str = [];
-                       for(var p in obj)
-                       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                       return str.join("&");
-                  },
-                data: {"deviceId":98745,"locationId":locationObject.foursquare_id}
-            })
-            .then(function(res){
-                console.log(res.data)
-
-                getUserDevices(locationObject.foursquare_id)
-                $scope.revealedLocations.push(locationObject.foursquare_id)
-                window.localStorage.setItem("revealedLocations", JSON.stringify($scope.revealedLocations));
-                //set flag value for revealed location
-                angular.forEach($scope.venue, function(value,key){
-                    if (value.foursquare_id == locationObject.foursquare_id){
-                      value.flag="1"
-                      console.log(value)
-                    }
-                });
-                $state.go("tab.visitors")
-            })
-           .catch(function(err){
-            console.log(err.data.message)
-          });
-
-          } else {
-
-             console.log('You clicked on "Cancel" button');
-
-          }
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Do you want to reveal your identity',
+        template: "See visitors allows you to reveal your identity to other people who have also visited this venue.<br> Your identity will only be visible to other people who choose to reveal their identity.<br> Do you want to continue?",
+        cancelText:"Don't Allow",
       });
-   }
-   
-   
 
-   };
-
-
-   
-
+      confirmPopup.then(function(res) {
+        if (res) {
+          $http({
+                url: "http://54.152.112.50:3000/locations/reveal/",
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    transformRequest: function(obj) {
+                     var str = [];
+                     for(var p in obj)
+                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                     return str.join("&");
+                },
+              data: {"deviceId":98745,"locationId":locationObject.foursquare_id}
+          })
+          .then(function(res){
+              console.log(res.data)
+              getUserDevices(locationObject.foursquare_id)
+              $scope.revealedLocations.push(locationObject.foursquare_id)
+              window.localStorage.setItem("revealedLocations", JSON.stringify($scope.revealedLocations));
+              //set flag value for revealed location
+              angular.forEach($scope.venue, function(value,key){
+                  if (value.foursquare_id == locationObject.foursquare_id){
+                    value.flag="1"
+                    console.log(value)
+                  }
+              });
+              $state.go("tab.visitors")
+          })
+          .catch(function(err){
+          console.log(err.data.message)
+          });
+        } else {
+          console.log('You clicked on "Cancel" button');
+        }
+      });
+    }
+  };
 });
+
+
 app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevice, $http){
 
+  //check is user registered
   $scope.reg= JSON.parse(window.localStorage.getItem("Registered")) || {"value":"False"}
   if ($scope.reg["value"] == "True"){
         $state.go("tab.venue") 
@@ -463,6 +449,7 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
   $scope.welcome= function(){
     $state.go("welcome");
   }
+
   $scope.tab_dash=function(user){
 
     $scope.userDetails={
@@ -471,6 +458,7 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
       "deviceId": 98745
       
     };
+
     //post user name, user email and device id to the server
     $http({
       url: "http://54.152.112.50:3000/users/register/",
@@ -484,21 +472,16 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
       },
       data: $scope.userDetails
     })
-      .then(function(res){
-        console.log(res.data)
-        if(res.data.status=="success"){
-
-          $scope.reg.value="True"
-
-          window.localStorage.setItem("Registered", JSON.stringify($scope.reg));
-
-          console.log("Login Successful")
-
-          $state.go("tab.venue")
-    }
-
+    .then(function(res){
+      console.log(res.data)
+      if(res.data.status=="success"){
+        $scope.reg.value="True"
+        window.localStorage.setItem("Registered", JSON.stringify($scope.reg));
+        console.log("Login Successful")
+        $state.go("tab.venue")
+      }
     })
-     .catch(function(err){
+    .catch(function(err){
       console.log(err.data.message)
     });
   }
