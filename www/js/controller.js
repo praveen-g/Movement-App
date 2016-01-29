@@ -1,11 +1,18 @@
 var app=angular.module('location');
 
+app.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});
+
 app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform, $cordovaDevice, $http, $state, $ionicPopup)
-{ 
+{
   //obtaining data from local storage if present
   $scope.temporaryPoints = JSON.parse(window.localStorage.getItem("temporaryPoints"))|| [];
   $scope.venue = JSON.parse(window.localStorage.getItem("venues"))|| [];
-
+  $scope.activity=JSON.parse(window.localStorage.getItem("activity"))|| [{"message":"Refresh for recent activity!"}];
+  console.log($scope.venue)
   //function to convert timestamp to hours
   var updateTime = function(timestamp){
     var d = new Date(timestamp);
@@ -13,24 +20,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     var time = ('0' + d.getHours()).slice(-2)+':'+('0' + d.getMinutes()).slice(-2)+':'+('0' + d.getSeconds()).slice(-2)
     return {"time":time, "date":date, "timestamp":timestamp};
   };
-
-  //calculate number of revealed users
-  var revealedUsers = function(venue){
-    var revealedValue
-    console.log("revealedUSers")
-    $http({
-        url: "http://54.152.112.50:3000/locations/revealedusers?locationId="+venue.foursquare_id,
-        method: 'GET',
-        contentType: 'application/json',
-        //headers: { 'Authorization': 'Bearer TOKEN' }
-      }).then(function(res){
-        console.log(res)
-        revealedValue = res.data.length;
-
-    })
-    console.log(revealedValue)
-    return revealedValue
-  }
 
   //record Temporary Points
   var recordPositonValues = function(lat,lng,time){
@@ -85,11 +74,24 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
               //store first venue recorded so that first venue is not null
               if ($scope.venue.length ==0){
                 console.log("Venue stored")
-                newVenue.flag="0" // set value flag to acocunt for revealed locatons 
-                newVenue.totalReveals=revealedUsers(newVenue)//get number of revealed users
+                newVenue.flag="0" // set value flag to acocunt for revealed locatons
+
+                //get number of revealed users 
+                $http({
+                  url: "http://54.152.112.50:3000/locations/revealedusers?locationId="+newVenue.foursquare_id,
+                  method: 'GET',
+                  contentType: 'application/json',
+                  //headers: { 'Authorization': 'Bearer TOKEN' }
+                }).then(function(res){
+                  newVenue.totalReveals = res.data.length;
+
+                })
                 $scope.venue=[newVenue]
+                console.log(newVenue)
+                console.log($scope.venue)
                 window.localStorage.setItem("venues",JSON.stringify($scope.venue))
-                renderMap(newVenue)
+                console.log(JSON.parse(window.localStorage.getItem("venues")))
+                //renderMap(newVenue)
               }
               else{
                 //check if venue logged
@@ -115,11 +117,22 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                   .then(function(res){
                     console.log("Successfully logged")
                     newVenue.flag="0"
-                    newVenue.totalReveals=revealedUsers(newVenue)
+                    //get number of revealed users 
+                    $http({
+                      url: "http://54.152.112.50:3000/locations/revealedusers?locationId="+newVenue.foursquare_id,
+                      method: 'GET',
+                      contentType: 'application/json',
+                      //headers: { 'Authorization': 'Bearer TOKEN' }
+                    }).then(function(res){
+                      console.log(res.data.length)
+                      newVenue.totalReveals = res.data.length;
+
+                    })
                     $scope.venue.push(newVenue)
-                    window.localStorage.setItem("venues",JSON.stringify($scope.venue))
                     console.log($scope.venue)
-                    renderMap(newVenue)
+                    window.localStorage.setItem("venues",JSON.stringify($scope.venue))
+                    console.log(JSON.parse(window.localStorage.getItem("venues")))
+                    //renderMap(newVenue)
                     
                   })
                   .catch(function(err){
@@ -251,10 +264,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     $scope.activity=JSON.parse(window.localStorage.getItem("activity"))|| [];
 
     //get timestamp of last refresh
-    var activity_time = JSON.parse(window.localStorage.getItem("activity_time"))|| {"time": -500};
-
-    //allow refresh only after 30 seconds
-    if (Math.floor((Date.now()-activity_time.time) / 1000)>30){
+    var activity_time = JSON.parse(window.localStorage.getItem("activity_time"))|| {"time": 0};
 
       //send deviceId and locatonId for ever venue to get current activity
       angular.forEach($scope.venue, function(value,key){
@@ -264,23 +274,30 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
           method: 'GET',
           contentType: 'application/json',
         }).then(function(res){
-      
-          if(res.data[0].revealedSince!=null){
-            //check flag value to see if location revealed or not
-            if (value.flag=="1"){
-              str=""
-              angular.forEach(res.data[0].revealedSince, function(value,key){
-                str+=value+' '
-              })
-              str+=" have visited "+value.name
-            }
-            else{
-              str=""
-              str=res.data[0].revealedSince.length+" people have visited "+value.name
-            }
-          }
-          $scope.activity.push({"message":str})
+          console.log(res.data[0].revealedSince)
 
+          //allow refresh only after 30 seconds
+            if(res.data[0].revealedSince!=null){
+              //check flag value to see if location revealed or not
+              str=""
+              if (value.flag=="1"){
+                angular.forEach(res.data[0].revealedSince, function(value,key){
+                  str+=value+' '
+                })
+                if (str!=""){
+                  str+=" have visited "+value.name
+                }
+              }
+              else{
+                str=res.data[0].revealedSince.length+" people have visited "+value.name
+              }
+            }
+            if (str!=""){
+              $scope.activity.push({"message":str})
+              window.localStorage.setItem("activity", JSON.stringify($scope.activity));
+            }
+            console.log(str)
+            console.log($scope.activity)  
         }).finally(function() {
          // Stop the ion-refresher from spinning
          $scope.$broadcast('scroll.refreshComplete');
@@ -289,8 +306,8 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       window.localStorage.setItem("activity_time", JSON.stringify({"time":Date.now()}));
        
       console.log($scope.activity)
-      window.localStorage.setItem("activity", JSON.stringify($scope.activity));
-    };
+      
+    //};
   }
 
 
@@ -298,7 +315,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
 
   $scope.reg= JSON.parse(window.localStorage.getItem("Registered")) || {"value":"False"}
-  $scope.activity= [{"message":"Refresh for recent activity!"}];
   $scope.visitor=[]
 
   $scope.map=[]
@@ -330,7 +346,17 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
     angular.forEach($scope.venue, function(value, key){
       var locationId = value.foursquare_id
-      value.totalReveals=revealedUsers(value)
+      //get number of revealed users 
+      $http({
+        url: "http://54.152.112.50:3000/locations/revealedusers?locationId="+value.foursquare_id,
+        method: 'GET',
+        contentType: 'application/json',
+      }).then(function(res){
+        console.log(res.data.length)
+        newVenue.totalReveals = res.data.length;
+
+      })
+      //value.totalReveals=$scope.revealedUsers(value)
       renderMap(value)
     });    
   };
@@ -338,7 +364,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
   $scope.visitorNames=[]
   var getUserDevices = function(locationId){
-
     $http({
       url:"http://54.152.112.50:3000/locations/revealedusers?locationId="+locationId,
       method: 'GET',
@@ -366,7 +391,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       if(keepGoing=="True"){
         if (locationObject.foursquare_id==value){
           getUserDevices(locationObject.foursquare_id)
-          console.log($scope.visitorNames)
           callPopup="False"
           keepGoing="False"
           $state.go("tab.visitors")
@@ -471,8 +495,12 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
       if(res.data.status=="success"){
         $scope.reg.value="True"
         window.localStorage.setItem("Registered", JSON.stringify($scope.reg));
+        window.alert("Registeration Successful")
         console.log("Login Successful")
         $state.go("tab.venue")
+      }
+      else{
+        window.alert("User Already exists")
       }
     })
     .catch(function(err){
@@ -480,3 +508,5 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
     });
   }
 });
+
+
