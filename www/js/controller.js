@@ -36,7 +36,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   var recordPositonValues = function(lat,lng,time){
     //store location values before processing
     $scope.temporaryPoints.push({
-      "deviceId":98745,
+      "deviceId":$cordovaDevice.getUUID(),
       "lat":lat,
       "llong":lng,
       "time":time       
@@ -243,11 +243,8 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   });
 
 
-
   //activity tab functions
 
-
- 
 
   $scope.refresh_activityTab= function(){
     //get list of previous activities
@@ -263,7 +260,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       angular.forEach($scope.venue, function(value,key){
         var str=""
         $http({
-          url: "http://54.152.112.50:3000/locations/activity/?deviceId=98745&locationId="+value.foursquare_id,
+          url: "http://54.152.112.50:3000/locations/activity/?deviceId="+$cordovaDevice.getUUID()+"&locationId="+value.foursquare_id,
           method: 'GET',
           contentType: 'application/json',
         }).then(function(res){
@@ -297,11 +294,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
   }
 
 
-
-
   // venue tab functions
-
-
 
 
   $scope.reg= JSON.parse(window.localStorage.getItem("Registered")) || {"value":"False"}
@@ -400,7 +393,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                      return str.join("&");
                 },
-              data: {"deviceId":98745,"locationId":locationObject.foursquare_id}
+              data: {"deviceId":$cordovaDevice.getUUID(),"locationId":locationObject.foursquare_id}
           })
           .then(function(res){
               console.log(res.data)
@@ -428,6 +421,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 });
 
 
+//controlls navigation 
 app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevice, $http){
 
   //check is user registered
@@ -455,7 +449,7 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
     $scope.userDetails={
       "fullname": user.name,
       "emailId":user.email,
-      "deviceId": 98745
+      "deviceId": $cordovaDevice.getUUID()
       
     };
 
