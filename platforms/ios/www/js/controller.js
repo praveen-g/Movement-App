@@ -122,9 +122,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                       url: "http://54.152.112.50:3000/locations/revealedusers?locationId="+newVenue.foursquare_id,
                       method: 'GET',
                       contentType: 'application/json',
-                      //headers: { 'Authorization': 'Bearer TOKEN' }
                     }).then(function(res){
-                      console.log(res.data.length)
                       newVenue.totalReveals = res.data.length;
 
                     })
@@ -216,10 +214,10 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     stationaryRadius: 0,
     distanceFilter: 50, //minimum distance (in meters) moved before distance is recorded
     disableElasticity: true, // Used to return locations every 1 km at high speeds
-    locationUpdateInterval: 1000*60*20, //update location every 20 minutes
+    locationUpdateInterval: 1000*60*5, //update location every 20 minutes
     minimumActivityRecognitionConfidence: 80,   // 0-100%.  Minimum activity-confidence for a state-change 
-    fastestLocationUpdateInterval: 5000,
-    activityRecognitionInterval: 60*1000, // recognises activity every 60 seconds. Increase to improve battery life
+    fastestLocationUpdateInterval: 5* 60* 1000,
+    activityRecognitionInterval: 5*60*1000, // recognises activity every 5 minutes. Increase to improve battery life
     stopDetectionDelay: 15,  // Wait x minutes to engage stop-detection system
     stopTimeout: 2,  // Wait 2 miutes to turn off location system after stop-detection
     activityType: 'Fitness', // set to Fitness for pedestrian related activity
@@ -231,6 +229,37 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     startOnBoot: true,  
   };
   
+
+  // var backgroundGeolocation=function(flag){
+
+  //   cordova.plugins.backgroundMode.enable();
+
+  //   cordova.plugins.backgroundMode.onactivate = function() {
+
+  //     //test if Background geolocation working
+  //     var callbackFn = function(location) {
+  //       console.log('[BackgroundGeoLocation] Update callback:  ' + location.latitude + ',' + location.longitude);
+  //       storePositionValues(location.coords.latitude,location.coords.longitude,updateTime(location.timestamp),position.coords.speed);
+  //     };
+
+  //     var failureFn = function(error) {
+  //       console.log('[BackgroundGeoLocation] Error: '+error);
+  //     };
+
+  //     $cordovaBackgroundGeolocation.configure(callbackFn, failureFn, options);
+
+  //     //turn on Background Geolocation
+  //     if(flag==true){
+  //       $cordovaBackgroundGeolocation.start();
+  //     }
+  //     else{
+  //       $cordovaBackgroundGeolocation.stop();
+  //     }
+
+  //   }
+
+  // }
+
 
   document.addEventListener("deviceready", function (){
 
@@ -251,8 +280,15 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
       $cordovaBackgroundGeolocation.configure(callbackFn, failureFn, options);
 
       //turn on Background Geolocation
-      $cordovaBackgroundGeolocation.start();
+      if(flag==true){
+        $cordovaBackgroundGeolocation.start();
+      }
+      else{
+        $cordovaBackgroundGeolocation.stop();
+      }
+
     }
+    
   });
 
 
@@ -274,13 +310,18 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
           method: 'GET',
           contentType: 'application/json',
         }).then(function(res){
-          console.log(res.data[0].revealedSince)
 
           //allow refresh only after 30 seconds
-            if(res.data[0].revealedSince!=null){
-              //check flag value to see if location revealed or not
-              str=""
-              if (value.flag=="1"){
+          if(res.data[0].revealedSince!=null){
+            //check flag value to see if location revealed or not
+            str=""
+            if (value.flag=="1"){
+              console.log("it is 1")
+              console.log(value)
+              if (res.data[0].revealedSince.length ==1){
+                str+=value+' has visited '+value.name
+              }
+              else{
                 angular.forEach(res.data[0].revealedSince, function(value,key){
                   str+=value+' '
                 })
@@ -288,26 +329,25 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                   str+=" have visited "+value.name
                 }
               }
-              else{
+            }
+            else{
+              if(res.data[0].revealedSince.length!=0){
                 str=res.data[0].revealedSince.length+" people have visited "+value.name
               }
             }
-            if (str!=""){
-              $scope.activity.push({"message":str})
-              window.localStorage.setItem("activity", JSON.stringify($scope.activity));
-            }
-            console.log(str)
-            console.log($scope.activity)  
+          }
+          if (str!=""){
+            $scope.activity.push({"message":str})
+            window.localStorage.setItem("activity", JSON.stringify($scope.activity));
+          }
+          console.log(str)
+          console.log($scope.activity)  
         }).finally(function() {
          // Stop the ion-refresher from spinning
          $scope.$broadcast('scroll.refreshComplete');
         });
       });
       window.localStorage.setItem("activity_time", JSON.stringify({"time":Date.now()}));
-       
-      console.log($scope.activity)
-      
-    //};
   }
 
 
@@ -353,11 +393,12 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         contentType: 'application/json',
       }).then(function(res){
         console.log(res.data.length)
-        newVenue.totalReveals = res.data.length;
-
-      })
-      //value.totalReveals=$scope.revealedUsers(value)
-      renderMap(value)
+        value.totalReveals = res.data.length;
+      }).finally(function() {
+         // Stop the ion-refresher from spinning
+         $scope.$broadcast('scroll.refreshComplete');
+        });
+      //renderMap(value)
     });    
   };
       
@@ -397,11 +438,13 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
         }
       }
     });
+
     //call pop if location not revealed
     if(callPopup=="True"){
       var confirmPopup = $ionicPopup.confirm({
         title: 'Do you want to reveal your identity',
         template: "See visitors allows you to reveal your identity to other people who have also visited this venue.<br> Your identity will only be visible to other people who choose to reveal their identity.<br> Do you want to continue?",
+        cssClass: 'custom-popup',
         cancelText:"Don't Allow",
       });
 
@@ -434,24 +477,47 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
               $state.go("tab.visitors")
           })
           .catch(function(err){
-          console.log(err.data.message)
+            console.log(err.data)
           });
-        } else {
+        }
+        else {
           console.log('You clicked on "Cancel" button');
         }
       });
     }
   };
+
+
+  //settings tab functions
+
+  $scope.locationTracking = { checked: true };
+
+  $scope.tracking = function(){
+    if($scope.locationTracking.checked== true){
+      //backgroundGeolocation(true)
+      console.log("Background Tracking turned on")
+    }
+    else if($scope.locationTracking.checked== false){
+      //cordova.plugins.backgroundMode.disable();
+      console.log("Background Tracking turned off")
+    }
+    
+  }
 });
 
 
 //controlls navigation 
 app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevice, $http){
-
+  $scope.venue=JSON.parse(window.localStorage.getItem("venues")) || []
   //check is user registered
   $scope.reg= JSON.parse(window.localStorage.getItem("Registered")) || {"value":"False"}
   if ($scope.reg["value"] == "True"){
-        $state.go("tab.venue") 
+    if ($scope.venue.length==0){
+      $state.go('tab.venueDefault')
+    }
+    else{
+      $state.go('tab.venue')
+    }
   }
 
   $scope.register = function(){
@@ -460,7 +526,12 @@ app.controller('NavCtrl', function($scope, $state, $ionicPlatform, $cordovaDevic
       $state.go("register");
     }
     else{
-      $state.go('tab.venue')
+      if ($scope.venue.length==0){
+        $state.go('tab.venueDefault')
+      }
+      else{
+        $state.go('tab.venue')
+      }
     }
   }
 

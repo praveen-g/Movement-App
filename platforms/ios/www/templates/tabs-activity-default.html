@@ -8,7 +8,7 @@
     	on-refresh="refresh_activityTab()">
   	</ion-refresher>
 	<ion-list >
-	  	<ion-item class="wrapping-list" ng-repeat= "acts in activity">
+	  	<ion-item class="item item-text-wrap" ng-repeat= "acts in activity|reverse">
 	            <h2> {{acts.message}}</h2>
 	   	</ion-item>
 	</ion-list>

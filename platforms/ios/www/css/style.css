@@ -14,11 +14,6 @@
 
 .angular-google-map-container { height: 400px; }
 
-.pop-up-button .btncode{
-	margin-right: 10%;
-	margin-left: 10%;
-}
-
 .button{
 	color: white;
 	border-radius: 5px;
@@ -60,7 +55,7 @@
 	padding-top: 20%
 }
 
-.wrapping-list .item-content, .wrapping-list .item {
-    overflow: initial;
-    white-space: initial;
+.custom-popup.popup-container .popup {
+  text-align: center;
 }
+

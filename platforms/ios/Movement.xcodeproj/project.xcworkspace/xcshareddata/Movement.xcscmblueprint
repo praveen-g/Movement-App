@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F081FBE4EB7D88A895D4C4E9F9E3B10054638D29",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F081FBE4EB7D88A895D4C4E9F9E3B10054638D29" : 0,
+    "6C121FA358F4130C1F0F21875B43B8E3857DFD54" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C421E429-A14A-43DD-A5FC-0A32662E750A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F081FBE4EB7D88A895D4C4E9F9E3B10054638D29" : "Movement-App\/",
+    "6C121FA358F4130C1F0F21875B43B8E3857DFD54" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Movement",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "platforms\/ios\/Movement.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/sTechLab\/movement.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6C121FA358F4130C1F0F21875B43B8E3857DFD54"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/praveen-g\/Movement-App.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F081FBE4EB7D88A895D4C4E9F9E3B10054638D29"
+    }
+  ]
+}

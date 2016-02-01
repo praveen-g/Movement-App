@@ -8,8 +8,8 @@
     	pulling-text="Pull to refresh..."
     	on-refresh="refresh()">
   	</ion-refresher>
-	<ion-list card class="wrapping-list">
-		<div class="item card" style="height:335px" ng-repeat="point in venue|reverse">
+	<ion-list card>
+		<div class="item card item-text-wrap" style="height:335px" ng-repeat="point in venue|reverse track by $index">
 			<div class="word-wrapping" style="height:25px;"><h2>{{point.name}}</h2></div>
 			<div id="map{{point.foursquare_id}}" data-tap-disabled="true" style="height:250px;"></div>
 			<div style="height:30px;padding-left:65%;padding-top:2%;"><button class="button" style="width:30%" ng-click= "reveal(point)" >See Visitors( {{point.totalReveals}} )</button></div>
