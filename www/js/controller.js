@@ -8,11 +8,12 @@ app.filter('reverse', function() {
 
 app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgroundGeolocation, $ionicPlatform, $cordovaDevice, $http, $state, $ionicPopup)
 {
+  $scope.toggleButton=true
   //obtaining data from local storage if present
   $scope.temporaryPoints = JSON.parse(window.localStorage.getItem("temporaryPoints"))|| [];
   $scope.venue = JSON.parse(window.localStorage.getItem("venues"))|| [];
   $scope.activity=JSON.parse(window.localStorage.getItem("activity"))|| [{"message":"Refresh for recent activity!"}];
-  console.log($scope.venue)
+  
   //function to convert timestamp to hours
   var updateTime = function(timestamp){
     var d = new Date(timestamp);
@@ -84,13 +85,9 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                   //headers: { 'Authorization': 'Bearer TOKEN' }
                 }).then(function(res){
                   newVenue.totalReveals = res.data.length;
-
                 })
                 $scope.venue=[newVenue]
-                console.log(newVenue)
-                console.log($scope.venue)
                 window.localStorage.setItem("venues",JSON.stringify($scope.venue))
-                console.log(JSON.parse(window.localStorage.getItem("venues")))
                 //renderMap(newVenue)
               }
               else{
@@ -124,8 +121,9 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
                       contentType: 'application/json',
                     }).then(function(res){
                       newVenue.totalReveals = res.data.length;
-
+                      console.log(newVenue)
                     })
+                    console.log(newVenue)
                     $scope.venue.push(newVenue)
                     console.log($scope.venue)
                     window.localStorage.setItem("venues",JSON.stringify($scope.venue))
@@ -228,37 +226,6 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
     stopOnTerminate: false,              // <-- [Android] Allow the background-service to run headless when user closes the app.
     startOnBoot: true,  
   };
-  
-
-  // var backgroundGeolocation=function(flag){
-
-  //   cordova.plugins.backgroundMode.enable();
-
-  //   cordova.plugins.backgroundMode.onactivate = function() {
-
-  //     //test if Background geolocation working
-  //     var callbackFn = function(location) {
-  //       console.log('[BackgroundGeoLocation] Update callback:  ' + location.latitude + ',' + location.longitude);
-  //       storePositionValues(location.coords.latitude,location.coords.longitude,updateTime(location.timestamp),position.coords.speed);
-  //     };
-
-  //     var failureFn = function(error) {
-  //       console.log('[BackgroundGeoLocation] Error: '+error);
-  //     };
-
-  //     $cordovaBackgroundGeolocation.configure(callbackFn, failureFn, options);
-
-  //     //turn on Background Geolocation
-  //     if(flag==true){
-  //       $cordovaBackgroundGeolocation.start();
-  //     }
-  //     else{
-  //       $cordovaBackgroundGeolocation.stop();
-  //     }
-
-  //   }
-
-  // }
 
 
   document.addEventListener("deviceready", function (){
@@ -279,18 +246,16 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
       $cordovaBackgroundGeolocation.configure(callbackFn, failureFn, options);
 
-      //turn on Background Geolocation
-      if(flag==true){
+      if ($scope.toggleButton==true){
+        //turn on Background Geolocation
         $cordovaBackgroundGeolocation.start();
       }
-      else{
+      else if ($scope.toggleButton==false){
         $cordovaBackgroundGeolocation.stop();
       }
-
     }
     
   });
-
 
   //activity tab functions
 
@@ -317,7 +282,7 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
             str=""
             if (value.flag=="1"){
               console.log("it is 1")
-              console.log(value)
+              console.log(res.data[0].revealedSince)
               if (res.data[0].revealedSince.length ==1){
                 str+=value+' has visited '+value.name
               }
@@ -494,11 +459,14 @@ app.controller('GeoCtrl', function($scope, $cordovaGeolocation, $cordovaBackgrou
 
   $scope.tracking = function(){
     if($scope.locationTracking.checked== true){
+
       //backgroundGeolocation(true)
+      $scope.toggleButton=true
       console.log("Background Tracking turned on")
     }
     else if($scope.locationTracking.checked== false){
-      //cordova.plugins.backgroundMode.disable();
+
+      $scope.toggleButton=false
       console.log("Background Tracking turned off")
     }
     
